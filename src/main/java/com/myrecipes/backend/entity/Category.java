@@ -2,6 +2,8 @@ package com.myrecipes.backend.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="category")
 public class Category {
@@ -14,6 +16,9 @@ public class Category {
     @Column(name = "name")
     private String name;
 
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Recipe> recipes;
+
     public String getName() {
         return name;
     }
@@ -21,4 +26,6 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }
