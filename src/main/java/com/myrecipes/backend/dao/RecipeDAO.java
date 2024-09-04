@@ -13,4 +13,6 @@ public interface RecipeDAO {
     Recipe save(Recipe theEmployee);
 
     void deleteById(int theId);
+
+    public List<Recipe> findByCategoryName(String categoryName);
 }

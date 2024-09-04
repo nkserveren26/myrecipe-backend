@@ -28,6 +28,14 @@ public class RecipeDAOImpl implements RecipeDAO {
     }
 
     @Override
+    public List<Recipe> findByCategoryName(String categoryName) {
+        String query = "SELECT r FROM Recipe r JOIN r.category c WHERE c.name = :categoryName";
+        return entityManager.createQuery(query, Recipe.class)
+                .setParameter("categoryName", categoryName)
+                .getResultList();
+    }
+
+    @Override
     public Recipe findById(int theId) {
         return null;
     }
