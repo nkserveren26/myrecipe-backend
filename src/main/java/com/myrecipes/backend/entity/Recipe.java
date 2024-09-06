@@ -13,11 +13,6 @@ public class Recipe {
     @Column(name = "id")
     private int id;
 
-    /*
-    @Column(name = "category_id")
-    private int categoryId;
-     */
-
     @Column(name = "title")
     private String title;
 
@@ -36,16 +31,6 @@ public class Recipe {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
-
-    /*
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-     */
 
     public String getTitle() {
         return title;
