@@ -21,4 +21,9 @@ public class RecipeServiceImpl implements RecipeService{
     public List<Recipe> findAll() {
         return recipeDAO.findAll();
     }
+
+    @Override
+    public List<Recipe> findByCategoryName(String categoryName) {
+        return recipeDAO.findByCategoryName(categoryName);
+    }
 }

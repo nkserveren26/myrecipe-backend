@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface RecipeService {
     List<Recipe> findAll();
+
+    List<Recipe> findByCategoryName(String categoryName);
 }
