@@ -19,8 +19,8 @@ public class Recipe {
     @Column(name = "servings")
     private int servings;
 
-    @Column(name = "image_path")
-    private String imagePath;
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "video_url")
     private String videoUrl;
@@ -48,12 +48,12 @@ public class Recipe {
         this.servings = servings;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public String getImage() {
+        return image;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getVideoUrl() {
