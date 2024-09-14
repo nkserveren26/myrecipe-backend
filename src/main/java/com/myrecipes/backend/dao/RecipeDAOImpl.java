@@ -1,6 +1,7 @@
 package com.myrecipes.backend.dao;
 
 import com.myrecipes.backend.entity.Recipe;
+import com.myrecipes.backend.entity.RecipeStep;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class RecipeDAOImpl implements RecipeDAO {
 
     @Override
     public Recipe findById(int theId) {
-        return null;
+        return entityManager.find(Recipe.class, theId);
     }
 
     @Override

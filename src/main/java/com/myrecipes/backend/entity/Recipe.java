@@ -76,4 +76,12 @@ public class Recipe {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    public List<RecipeStep> getSteps() {
+        return this.steps;
+    }
+
+    public void setSteps(List<RecipeStep> steps) {
+        this.steps = steps;
+    }
 }
