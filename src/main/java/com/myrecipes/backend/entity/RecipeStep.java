@@ -17,6 +17,10 @@ public class RecipeStep {
     @Column(name = "description")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "recipe_id", nullable = false)
+    private Recipe recipe;
+
     public int getStepNumber() {
         return stepNumber;
     }

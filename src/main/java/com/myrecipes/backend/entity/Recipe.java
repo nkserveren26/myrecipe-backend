@@ -3,6 +3,7 @@ package com.myrecipes.backend.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "recipe")
@@ -31,6 +32,10 @@ public class Recipe {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    // RecipeStepとのOneToManyリレーションを定義
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
+    private List<RecipeStep> steps;
 
     public String getTitle() {
         return title;
