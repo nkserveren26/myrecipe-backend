@@ -1,11 +1,9 @@
 package com.myrecipes.backend.rest;
 
 import com.myrecipes.backend.entity.Recipe;
+import com.myrecipes.backend.entity.RecipeStep;
 import com.myrecipes.backend.service.RecipeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,4 +26,10 @@ public class RecipeRestController {
     public List<Recipe> getRecipesByCategoryName(@RequestParam String categoryName) {
         return recipeService.findByCategoryName(categoryName);
     }
+
+    @GetMapping("/{id}/steps")
+    public List<RecipeStep> getRecipeSteps(@PathVariable int id) {
+        return recipeService.getRecipeSteps(id);
+    }
+
 }
