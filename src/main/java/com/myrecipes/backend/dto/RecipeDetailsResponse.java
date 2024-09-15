@@ -8,7 +8,7 @@ import java.util.List;
 public class RecipeDetailsResponse {
     private int id; // レシピのID
     private String title; // レシピのタイトル
-    private String videoUrl; // レシピに関連するビデオのURL
+    private String videoUrl; // レシピ動画のURL
     private List<RecipeIngredient> ingredients; // 材料のリスト
     private List<RecipeStep> steps; // ステップのリスト
 
