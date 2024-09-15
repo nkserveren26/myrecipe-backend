@@ -23,8 +23,6 @@ public class RecipeDAOImpl implements RecipeDAO {
     public List<Recipe> findAll() {
         TypedQuery<Recipe> theQuery = entityManager.createQuery("from Recipe", Recipe.class);
 
-        //List<Recipe> recipes = theQuery.getResultList();
-
         return theQuery.getResultList();
     }
 
