@@ -17,11 +17,6 @@ public class RecipeRestController {
         recipeService = theRecipeService;
     }
 
-    @GetMapping("/recipes")
-    public List<Recipe> getRecipes() {
-        return recipeService.findAll();
-    }
-
     @GetMapping("/by-category")
     public List<Recipe> getRecipesByCategoryName(@RequestParam String categoryName) {
         return recipeService.findByCategoryName(categoryName);
