@@ -1,5 +1,6 @@
 package com.myrecipes.backend.rest;
 
+import com.myrecipes.backend.dto.RecipeDetailsResponse;
 import com.myrecipes.backend.entity.Recipe;
 import com.myrecipes.backend.entity.RecipeStep;
 import com.myrecipes.backend.service.RecipeService;
@@ -23,7 +24,7 @@ public class RecipeRestController {
     }
 
     @GetMapping("/{id}")
-    public List<RecipeStep> getRecipeDetails(@PathVariable int id) {
+    public RecipeDetailsResponse getRecipeDetails(@PathVariable int id) {
         return recipeService.getRecipeDetails(id);
     }
 

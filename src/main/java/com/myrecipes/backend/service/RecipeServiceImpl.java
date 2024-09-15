@@ -1,7 +1,9 @@
 package com.myrecipes.backend.service;
 
 import com.myrecipes.backend.dao.RecipeDAO;
+import com.myrecipes.backend.dto.RecipeDetailsResponse;
 import com.myrecipes.backend.entity.Recipe;
+import com.myrecipes.backend.entity.RecipeIngredient;
 import com.myrecipes.backend.entity.RecipeStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +31,18 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public List<RecipeStep> getRecipeDetails(int id) {
+    public RecipeDetailsResponse getRecipeDetails(int id) {
+        // 指定されたidのレシピを取得
         Recipe recipe = recipeDAO.findById(id);
-        return recipe.getSteps();
+
+        // 取得したレシピの材料を取得
+        List<RecipeIngredient> ingredients = recipe.getIngredients();
+
+        // 取得したレシピの手順を取得
+        List<RecipeStep> steps = recipe.getSteps();
+
+        return new RecipeDetailsResponse(
+                id, recipe.getTitle(), recipe.getVideoUrl(), ingredients, steps
+        );
     }
 }

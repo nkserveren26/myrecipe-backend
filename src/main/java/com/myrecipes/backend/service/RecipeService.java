@@ -1,5 +1,6 @@
 package com.myrecipes.backend.service;
 
+import com.myrecipes.backend.dto.RecipeDetailsResponse;
 import com.myrecipes.backend.entity.Recipe;
 import com.myrecipes.backend.entity.RecipeStep;
 
@@ -10,5 +11,5 @@ public interface RecipeService {
 
     List<Recipe> findByCategoryName(String categoryName);
 
-    public List<RecipeStep> getRecipeDetails(int id);
+    public RecipeDetailsResponse getRecipeDetails(int id);
 }
