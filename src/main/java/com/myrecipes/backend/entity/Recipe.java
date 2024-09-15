@@ -38,6 +38,10 @@ public class Recipe {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
     private List<RecipeStep> steps;
 
+    // RecipeIngredientとのOneToManyリレーションを定義
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
+    private List<RecipeIngredient> ingredients;
+
     public String getTitle() {
         return title;
     }
@@ -84,5 +88,13 @@ public class Recipe {
 
     public void setSteps(List<RecipeStep> steps) {
         this.steps = steps;
+    }
+
+    public List<RecipeIngredient> getIngredients() {
+        return this.ingredients;
+    }
+
+    public void setIngredients(List<RecipeIngredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
