@@ -22,9 +22,9 @@ public class RecipeRestController {
         return recipeService.findByCategoryName(categoryName);
     }
 
-    @GetMapping("/{id}/steps")
-    public List<RecipeStep> getRecipeSteps(@PathVariable int id) {
-        return recipeService.getRecipeSteps(id);
+    @GetMapping("/{id}")
+    public List<RecipeStep> getRecipeDetails(@PathVariable int id) {
+        return recipeService.getRecipeDetails(id);
     }
 
 }

@@ -29,7 +29,7 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public List<RecipeStep> getRecipeSteps(int id) {
+    public List<RecipeStep> getRecipeDetails(int id) {
         Recipe recipe = recipeDAO.findById(id);
         return recipe.getSteps();
     }

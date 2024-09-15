@@ -10,5 +10,5 @@ public interface RecipeService {
 
     List<Recipe> findByCategoryName(String categoryName);
 
-    public List<RecipeStep> getRecipeSteps(int id);
+    public List<RecipeStep> getRecipeDetails(int id);
 }
