@@ -1,6 +1,7 @@
 package com.myrecipes.backend.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.event.spi.SaveOrUpdateEvent;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -11,13 +11,13 @@ public class RecipeStep {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "recipe_step")
+    @Column(name = "step_number")
     private int stepNumber;
 
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 
