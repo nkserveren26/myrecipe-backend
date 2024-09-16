@@ -1,7 +1,6 @@
 package com.myrecipes.backend.dao;
 
 import com.myrecipes.backend.entity.Recipe;
-import com.myrecipes.backend.entity.RecipeStep;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
