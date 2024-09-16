@@ -4,7 +4,6 @@ import com.myrecipes.backend.dao.RecipeDAO;
 import com.myrecipes.backend.dto.RecipeDetailsResponse;
 import com.myrecipes.backend.entity.Recipe;
 import com.myrecipes.backend.entity.RecipeIngredient;
-import com.myrecipes.backend.entity.RecipePoint;
 import com.myrecipes.backend.entity.RecipeStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

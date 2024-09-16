@@ -1,7 +1,6 @@
 package com.myrecipes.backend.dto;
 
 import com.myrecipes.backend.entity.RecipeIngredient;
-import com.myrecipes.backend.entity.RecipePoint;
 import com.myrecipes.backend.entity.RecipeStep;
 
 import java.util.List;
