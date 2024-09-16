@@ -42,6 +42,10 @@ public class Recipe {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
     private List<RecipeIngredient> ingredients;
 
+    // RecipePointとの1対1のリレーションを定義
+    @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private RecipePoint recipePoint;
+
     public String getTitle() {
         return title;
     }
@@ -96,5 +100,13 @@ public class Recipe {
 
     public void setIngredients(List<RecipeIngredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public RecipePoint getRecipePoint() {
+        return recipePoint;
+    }
+
+    public void setRecipePoint(RecipePoint recipePoint) {
+        this.recipePoint = recipePoint;
     }
 }
