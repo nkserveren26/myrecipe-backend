@@ -35,11 +35,11 @@ public class Recipe {
     private Category category;
 
     // RecipeStepとのOneToManyリレーションを定義
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "recipe")
     private List<RecipeStep> steps;
 
     // RecipeIngredientとのOneToManyリレーションを定義
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "recipe")
     private List<RecipeIngredient> ingredients;
 
     // RecipePointとの1対1のリレーションを定義
