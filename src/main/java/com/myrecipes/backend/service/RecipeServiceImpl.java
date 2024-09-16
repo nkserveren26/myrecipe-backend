@@ -4,6 +4,7 @@ import com.myrecipes.backend.dao.RecipeDAO;
 import com.myrecipes.backend.dto.RecipeDetailsResponse;
 import com.myrecipes.backend.entity.Recipe;
 import com.myrecipes.backend.entity.RecipeIngredient;
+import com.myrecipes.backend.entity.RecipePoint;
 import com.myrecipes.backend.entity.RecipeStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,11 @@ public class RecipeServiceImpl implements RecipeService{
         // 取得したレシピの手順を取得
         List<RecipeStep> steps = recipe.getSteps();
 
+        // 取得したレシピのコツ・ポイントを取得
+        RecipePoint recipePoint = recipe.getRecipePoint();
+
         return new RecipeDetailsResponse(
-                id, recipe.getTitle(), recipe.getVideoUrl(), ingredients, steps
+                id, recipe.getTitle(), recipe.getVideoUrl(), ingredients, steps, recipePoint
         );
     }
 }

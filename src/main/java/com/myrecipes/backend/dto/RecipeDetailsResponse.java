@@ -1,6 +1,7 @@
 package com.myrecipes.backend.dto;
 
 import com.myrecipes.backend.entity.RecipeIngredient;
+import com.myrecipes.backend.entity.RecipePoint;
 import com.myrecipes.backend.entity.RecipeStep;
 
 import java.util.List;
@@ -11,15 +12,17 @@ public class RecipeDetailsResponse {
     private String videoUrl; // レシピ動画のURL
     private List<RecipeIngredient> ingredients; // 材料のリスト
     private List<RecipeStep> steps; // ステップのリスト
+    private RecipePoint recipePoint; // レシピのコツ・ポイント
 
     public RecipeDetailsResponse(
             int id, String title, String videoUrl,
-            List<RecipeIngredient> ingredients, List<RecipeStep> steps) {
+            List<RecipeIngredient> ingredients, List<RecipeStep> steps, RecipePoint recipePoint) {
         this.id = id;
         this.title = title;
         this.videoUrl = videoUrl;
         this.ingredients = ingredients;
         this.steps = steps;
+        this.recipePoint = recipePoint;
     }
 
     public int getId() {
@@ -60,5 +63,13 @@ public class RecipeDetailsResponse {
 
     public void setSteps(List<RecipeStep> steps) {
         this.steps = steps;
+    }
+
+    public RecipePoint getRecipePoint() {
+        return recipePoint;
+    }
+
+    public void setRecipePoint(RecipePoint recipePoint) {
+        this.recipePoint = recipePoint;
     }
 }
