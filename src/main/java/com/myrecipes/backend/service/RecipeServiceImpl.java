@@ -43,10 +43,10 @@ public class RecipeServiceImpl implements RecipeService{
         List<RecipeStep> steps = recipe.getSteps();
 
         // 取得したレシピのコツ・ポイントを取得
-        RecipePoint recipePoint = recipe.getRecipePoint();
+        String point = recipe.getRecipePoint().getPoint();
 
         return new RecipeDetailsResponse(
-                id, recipe.getTitle(), recipe.getVideoUrl(), ingredients, steps, recipePoint
+                id, recipe.getTitle(), recipe.getVideoUrl(), ingredients, steps, point
         );
     }
 }

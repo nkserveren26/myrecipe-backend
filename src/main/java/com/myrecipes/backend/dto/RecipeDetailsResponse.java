@@ -12,17 +12,17 @@ public class RecipeDetailsResponse {
     private String videoUrl; // レシピ動画のURL
     private List<RecipeIngredient> ingredients; // 材料のリスト
     private List<RecipeStep> steps; // ステップのリスト
-    private RecipePoint recipePoint; // レシピのコツ・ポイント
+    private String point; // レシピのコツ・ポイント
 
     public RecipeDetailsResponse(
             int id, String title, String videoUrl,
-            List<RecipeIngredient> ingredients, List<RecipeStep> steps, RecipePoint recipePoint) {
+            List<RecipeIngredient> ingredients, List<RecipeStep> steps, String point) {
         this.id = id;
         this.title = title;
         this.videoUrl = videoUrl;
         this.ingredients = ingredients;
         this.steps = steps;
-        this.recipePoint = recipePoint;
+        this.point = point;
     }
 
     public int getId() {
@@ -65,11 +65,11 @@ public class RecipeDetailsResponse {
         this.steps = steps;
     }
 
-    public RecipePoint getRecipePoint() {
-        return recipePoint;
+    public String getPoint() {
+        return this.point;
     }
 
-    public void setRecipePoint(RecipePoint recipePoint) {
-        this.recipePoint = recipePoint;
+    public void setPoint(String point) {
+        this.point = point;
     }
 }
