@@ -29,7 +29,7 @@ public class RecipeDAOImpl implements RecipeDAO {
     @Override
     public List<RecipeResponse> findByCategoryName(String categoryName) {
         // 指定されたカテゴリに該当するレシピを取得するSQLを定義
-        String query = "SELECT new com.myrecipes.backend.dto.RecipeDto(r.id, r.title, r.image, r.createdAt) FROM Recipe r JOIN r.category c WHERE c.name = :categoryName";
+        String query = "SELECT new com.myrecipes.backend.dto.RecipeResponse(r.id, r.title, r.image, r.createdAt) FROM Recipe r JOIN r.category c WHERE c.name = :categoryName";
 
         return entityManager.createQuery(query, RecipeResponse.class)
                 .setParameter("categoryName", categoryName)
