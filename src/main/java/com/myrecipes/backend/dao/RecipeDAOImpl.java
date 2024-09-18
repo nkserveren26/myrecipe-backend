@@ -1,5 +1,6 @@
 package com.myrecipes.backend.dao;
 
+import com.myrecipes.backend.dto.RecipeResponse;
 import com.myrecipes.backend.entity.Recipe;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -26,11 +27,11 @@ public class RecipeDAOImpl implements RecipeDAO {
     }
 
     @Override
-    public List<Recipe> findByCategoryName(String categoryName) {
+    public List<RecipeResponse> findByCategoryName(String categoryName) {
         // 指定されたカテゴリに該当するレシピを取得するSQLを定義
-        String query = "SELECT r FROM Recipe r JOIN r.category c WHERE c.name = :categoryName";
+        String query = "SELECT new com.myrecipes.backend.dto.RecipeDto(r.id, r.title, r.image, r.createdAt) FROM Recipe r JOIN r.category c WHERE c.name = :categoryName";
 
-        return entityManager.createQuery(query, Recipe.class)
+        return entityManager.createQuery(query, RecipeResponse.class)
                 .setParameter("categoryName", categoryName)
                 .getResultList();
     }

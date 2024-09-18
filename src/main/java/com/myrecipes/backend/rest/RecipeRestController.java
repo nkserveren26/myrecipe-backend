@@ -1,6 +1,7 @@
 package com.myrecipes.backend.rest;
 
 import com.myrecipes.backend.dto.RecipeDetailsResponse;
+import com.myrecipes.backend.dto.RecipeResponse;
 import com.myrecipes.backend.entity.Recipe;
 import com.myrecipes.backend.service.RecipeService;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class RecipeRestController {
     }
 
     @GetMapping("/by-category")
-    public List<Recipe> getRecipesByCategoryName(@RequestParam String categoryName) {
+    public List<RecipeResponse> getRecipesByCategoryName(@RequestParam String categoryName) {
         return recipeService.findByCategoryName(categoryName);
     }
 

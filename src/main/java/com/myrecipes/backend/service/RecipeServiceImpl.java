@@ -2,6 +2,7 @@ package com.myrecipes.backend.service;
 
 import com.myrecipes.backend.dao.RecipeDAO;
 import com.myrecipes.backend.dto.RecipeDetailsResponse;
+import com.myrecipes.backend.dto.RecipeResponse;
 import com.myrecipes.backend.entity.Recipe;
 import com.myrecipes.backend.entity.RecipeIngredient;
 import com.myrecipes.backend.entity.RecipeStep;
@@ -26,7 +27,7 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public List<Recipe> findByCategoryName(String categoryName) {
+    public List<RecipeResponse> findByCategoryName(String categoryName) {
         return recipeDAO.findByCategoryName(categoryName);
     }
 
