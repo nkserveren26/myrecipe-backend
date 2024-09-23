@@ -28,4 +28,9 @@ public class RecipeRestController {
         return recipeService.getRecipeDetails(id);
     }
 
+    @PostMapping
+    public void addRecipe(@RequestBody Recipe theRecipe) {
+        System.out.println(theRecipe);
+    }
+
 }

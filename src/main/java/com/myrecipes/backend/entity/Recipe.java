@@ -108,4 +108,19 @@ public class Recipe {
     public void setRecipePoint(RecipePoint recipePoint) {
         this.recipePoint = recipePoint;
     }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "title='" + title + '\'' +
+                ", servings=" + servings +
+                ", image='" + image + '\'' +
+                ", videoUrl='" + videoUrl + '\'' +
+                ", createdAt=" + createdAt +
+                ", category=" + category +
+                ", steps=" + steps +
+                ", ingredients=" + ingredients +
+                ", recipePoint=" + recipePoint +
+                '}';
+    }
 }
