@@ -1,5 +1,6 @@
 package com.myrecipes.backend.rest;
 
+import com.myrecipes.backend.dto.AddRecipeRequestDTO;
 import com.myrecipes.backend.dto.RecipeDetailsResponse;
 import com.myrecipes.backend.dto.RecipeResponse;
 import com.myrecipes.backend.entity.Recipe;
@@ -29,9 +30,9 @@ public class RecipeRestController {
     }
 
     @PostMapping
-    public void addRecipe(@RequestBody Recipe theRecipe) {
+    public void addRecipe(@RequestBody AddRecipeRequestDTO addRecipeRequestDTO) {
         System.out.println("Adding Recipe.");
-        System.out.println(theRecipe);
+        System.out.println(addRecipeRequestDTO);
     }
 
 }
