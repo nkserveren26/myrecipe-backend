@@ -30,6 +30,7 @@ public class RecipeRestController {
 
     @PostMapping
     public void addRecipe(@RequestBody Recipe theRecipe) {
+        System.out.println("Adding Recipe.");
         System.out.println(theRecipe);
     }
 
