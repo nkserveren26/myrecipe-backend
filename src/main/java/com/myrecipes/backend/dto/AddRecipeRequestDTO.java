@@ -79,4 +79,18 @@ public class AddRecipeRequestDTO {
     public void setPoint(String point) {
         this.point = point;
     }
+
+    @Override
+    public String toString() {
+        return "AddRecipeRequestDTO{" +
+                "title='" + title + '\'' +
+                ", servings=" + servings +
+                ", image='" + image + '\'' +
+                ", videoUrl='" + videoUrl + '\'' +
+                ", category='" + category + '\'' +
+                ", ingredients=" + ingredients +
+                ", steps=" + steps +
+                ", point='" + point + '\'' +
+                '}';
+    }
 }
