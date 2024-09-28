@@ -36,4 +36,14 @@ public class RecipeStep {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "RecipeStep{" +
+                "id=" + id +
+                ", stepNumber=" + stepNumber +
+                ", description='" + description + '\'' +
+                ", recipe=" + recipe +
+                '}';
+    }
 }

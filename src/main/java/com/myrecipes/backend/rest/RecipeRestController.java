@@ -4,6 +4,7 @@ import com.myrecipes.backend.dto.AddRecipeRequestDTO;
 import com.myrecipes.backend.dto.RecipeDetailsResponse;
 import com.myrecipes.backend.dto.RecipeResponse;
 import com.myrecipes.backend.entity.Recipe;
+import com.myrecipes.backend.entity.RecipePoint;
 import com.myrecipes.backend.service.RecipeService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,6 +46,12 @@ public class RecipeRestController {
         recipe.setTitle(addRecipeRequestDTO.getTitle());
         recipe.setServings(addRecipeRequestDTO.getServings());
         recipe.setVideoUrl(addRecipeRequestDTO.getVideoUrl());
+        recipe.setIngredients(addRecipeRequestDTO.getIngredients());
+        recipe.setSteps(addRecipeRequestDTO.getSteps());
+
+        // RecipePointインスタンスを生成し、RecipeのrecipePointフィールドにセット
+        RecipePoint recipePoint = new RecipePoint(addRecipeRequestDTO.getPoint());
+        recipe.setRecipePoint(recipePoint);
 
         // 日本時間の現在時刻を取得
         ZoneId zoneId = ZoneId.of("Asia/Tokyo");
