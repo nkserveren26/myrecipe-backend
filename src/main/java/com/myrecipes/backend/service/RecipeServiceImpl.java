@@ -1,8 +1,10 @@
 package com.myrecipes.backend.service;
 
+import com.myrecipes.backend.dao.CategoryDAO;
 import com.myrecipes.backend.dao.RecipeDAO;
 import com.myrecipes.backend.dto.RecipeDetailsResponse;
 import com.myrecipes.backend.dto.RecipeResponse;
+import com.myrecipes.backend.entity.Category;
 import com.myrecipes.backend.entity.Recipe;
 import com.myrecipes.backend.entity.RecipeIngredient;
 import com.myrecipes.backend.entity.RecipeStep;
@@ -15,10 +17,12 @@ import java.util.List;
 public class RecipeServiceImpl implements RecipeService{
 
     private RecipeDAO recipeDAO;
+    private CategoryDAO categoryDAO;
 
     @Autowired
-    public RecipeServiceImpl(RecipeDAO theRecipeDAO) {
+    public RecipeServiceImpl(RecipeDAO theRecipeDAO, CategoryDAO theCategoryDAO) {
         recipeDAO = theRecipeDAO;
+        categoryDAO = theCategoryDAO;
     }
 
     @Override
@@ -27,7 +31,7 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public List<RecipeResponse> findByCategoryName(String categoryName) {
+    public List<RecipeResponse> findRecipeByCategoryName(String categoryName) {
         return recipeDAO.findByCategoryName(categoryName);
     }
 
@@ -48,5 +52,10 @@ public class RecipeServiceImpl implements RecipeService{
         return new RecipeDetailsResponse(
                 id, recipe.getTitle(), recipe.getVideoUrl(), ingredients, steps, point
         );
+    }
+
+    @Override
+    public Category findCategoryByName(String categoryName) {
+        return categoryDAO.findCategoryByName(categoryName);
     }
 }

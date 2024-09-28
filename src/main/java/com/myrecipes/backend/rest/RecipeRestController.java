@@ -3,6 +3,7 @@ package com.myrecipes.backend.rest;
 import com.myrecipes.backend.dto.AddRecipeRequestDTO;
 import com.myrecipes.backend.dto.RecipeDetailsResponse;
 import com.myrecipes.backend.dto.RecipeResponse;
+import com.myrecipes.backend.entity.Category;
 import com.myrecipes.backend.entity.Recipe;
 import com.myrecipes.backend.entity.RecipePoint;
 import com.myrecipes.backend.service.RecipeService;
@@ -25,7 +26,7 @@ public class RecipeRestController {
 
     @GetMapping("/by-category")
     public List<RecipeResponse> getRecipesByCategoryName(@RequestParam String categoryName) {
-        return recipeService.findByCategoryName(categoryName);
+        return recipeService.findRecipeByCategoryName(categoryName);
     }
 
     @GetMapping("/{id}")
@@ -59,6 +60,11 @@ public class RecipeRestController {
 
         // createdAtフィールドに日本時間を設定
         recipe.setCreatedAt(jstNow);
+
+        // categoryフィールドにCategoryインスタンスをセット
+        Category category = recipeService.findCategoryByName(addRecipeRequestDTO.getCategory());
+        recipe.setCategory(category);
+
 
         // 画像をS3にアップロード
 
