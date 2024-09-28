@@ -6,6 +6,7 @@ import com.myrecipes.backend.dto.RecipeResponse;
 import com.myrecipes.backend.entity.Recipe;
 import com.myrecipes.backend.service.RecipeService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class RecipeRestController {
     }
 
     @PostMapping
-    public void addRecipe(@RequestBody AddRecipeRequestDTO addRecipeRequestDTO) {
+    public void addRecipe(@RequestPart("recipe") AddRecipeRequestDTO addRecipeRequestDTO,@RequestPart("thumbnail") MultipartFile thumbnail) {
         System.out.println("Adding Recipe.");
         System.out.println(addRecipeRequestDTO);
     }

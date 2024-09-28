@@ -2,6 +2,7 @@ package com.myrecipes.backend.dto;
 
 import com.myrecipes.backend.entity.RecipeIngredient;
 import com.myrecipes.backend.entity.RecipeStep;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -9,7 +10,6 @@ public class AddRecipeRequestDTO {
 
     private String title;
     private int servings;
-    private String image;
     private String videoUrl;
     private String category; // カテゴリー名を文字列で受け取る
     private List<RecipeIngredient> ingredients;
@@ -30,14 +30,6 @@ public class AddRecipeRequestDTO {
 
     public void setServings(int servings) {
         this.servings = servings;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getVideoUrl() {
@@ -85,7 +77,6 @@ public class AddRecipeRequestDTO {
         return "AddRecipeRequestDTO{" +
                 "title='" + title + '\'' +
                 ", servings=" + servings +
-                ", image='" + image + '\'' +
                 ", videoUrl='" + videoUrl + '\'' +
                 ", category='" + category + '\'' +
                 ", ingredients=" + ingredients +
