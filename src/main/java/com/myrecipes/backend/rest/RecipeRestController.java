@@ -36,43 +36,9 @@ public class RecipeRestController {
 
     @PostMapping
     public void addRecipe(@RequestPart("recipe") AddRecipeRequestDTO addRecipeRequestDTO, @RequestPart("thumbnail") MultipartFile thumbnail) {
-        System.out.println("Adding Recipe.");
-
-        // Recipeインスタンス生成
-        Recipe recipe = new Recipe();
-
-        // Recipeインスタンスの各フィールドに値をセット
-        recipe.setTitle(addRecipeRequestDTO.getTitle());
-        recipe.setServings(addRecipeRequestDTO.getServings());
-        recipe.setVideoUrl(addRecipeRequestDTO.getVideoUrl());
-        recipe.setIngredients(addRecipeRequestDTO.getIngredients());
-        recipe.setSteps(addRecipeRequestDTO.getSteps());
-
-        // RecipePointインスタンスを生成し、RecipeのrecipePointフィールドにセット
-        RecipePoint recipePoint = new RecipePoint(addRecipeRequestDTO.getPoint());
-        recipe.setRecipePoint(recipePoint);
-
-        // 日本時間の現在時刻を取得
-        ZoneId zoneId = ZoneId.of("Asia/Tokyo");
-        LocalDateTime jstNow = LocalDateTime.now(zoneId);
-
-        // createdAtフィールドに日本時間を設定
-        recipe.setCreatedAt(jstNow);
-
-        // categoryフィールドにCategoryインスタンスをセット
-        Category category = recipeService.findCategoryByName(addRecipeRequestDTO.getCategory());
-        recipe.setCategory(category);
-
-        System.out.println(recipe);
-
-
-        // 画像をS3にアップロード
-        recipe.setImage("aqqua_pazza.jpg");
-
-        // 署名付きURLをRecipeのimageフィールドにセット
 
         // レシピを新規登録
-        recipeService.AddRecipe(recipe);
+        recipeService.AddRecipe(addRecipeRequestDTO, thumbnail);
     }
 
 }
