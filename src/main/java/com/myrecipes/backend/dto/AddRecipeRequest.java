@@ -2,11 +2,10 @@ package com.myrecipes.backend.dto;
 
 import com.myrecipes.backend.entity.RecipeIngredient;
 import com.myrecipes.backend.entity.RecipeStep;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-public class AddRecipeRequestDTO {
+public class AddRecipeRequest {
 
     private String title;
     private int servings;

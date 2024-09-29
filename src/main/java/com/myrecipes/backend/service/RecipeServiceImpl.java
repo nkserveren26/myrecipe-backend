@@ -2,7 +2,7 @@ package com.myrecipes.backend.service;
 
 import com.myrecipes.backend.dao.CategoryDAO;
 import com.myrecipes.backend.dao.RecipeDAO;
-import com.myrecipes.backend.dto.AddRecipeRequestDTO;
+import com.myrecipes.backend.dto.AddRecipeRequest;
 import com.myrecipes.backend.dto.RecipeDetailsResponse;
 import com.myrecipes.backend.dto.RecipeResponse;
 import com.myrecipes.backend.entity.*;
@@ -61,7 +61,7 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public void AddRecipe(AddRecipeRequestDTO addRecipeRequestDTO, MultipartFile thumbnail) {
+    public void AddRecipe(AddRecipeRequest addRecipeRequest, MultipartFile thumbnail) {
 
         System.out.println("Adding Recipe.");
 
@@ -69,14 +69,14 @@ public class RecipeServiceImpl implements RecipeService{
         Recipe recipe = new Recipe();
 
         // Recipeインスタンスの各フィールドに値をセット
-        recipe.setTitle(addRecipeRequestDTO.getTitle());
-        recipe.setServings(addRecipeRequestDTO.getServings());
-        recipe.setVideoUrl(addRecipeRequestDTO.getVideoUrl());
-        recipe.setIngredients(addRecipeRequestDTO.getIngredients());
-        recipe.setSteps(addRecipeRequestDTO.getSteps());
+        recipe.setTitle(addRecipeRequest.getTitle());
+        recipe.setServings(addRecipeRequest.getServings());
+        recipe.setVideoUrl(addRecipeRequest.getVideoUrl());
+        recipe.setIngredients(addRecipeRequest.getIngredients());
+        recipe.setSteps(addRecipeRequest.getSteps());
 
         // RecipePointインスタンスを生成し、RecipeのrecipePointフィールドにセット
-        RecipePoint recipePoint = new RecipePoint(addRecipeRequestDTO.getPoint());
+        RecipePoint recipePoint = new RecipePoint(addRecipeRequest.getPoint());
         recipe.setRecipePoint(recipePoint);
 
         // 日本時間の現在時刻を取得
@@ -87,7 +87,7 @@ public class RecipeServiceImpl implements RecipeService{
         recipe.setCreatedAt(jstNow);
 
         // categoryフィールドにCategoryインスタンスをセット
-        Category category = findCategoryByName(addRecipeRequestDTO.getCategory());
+        Category category = findCategoryByName(addRecipeRequest.getCategory());
         recipe.setCategory(category);
 
         System.out.println(recipe);
