@@ -63,8 +63,6 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public void AddRecipe(AddRecipeRequest addRecipeRequest, MultipartFile thumbnail) {
 
-        System.out.println("Adding Recipe.");
-
         // Recipeインスタンス生成
         Recipe recipe = new Recipe();
 
@@ -90,13 +88,11 @@ public class RecipeServiceImpl implements RecipeService{
         Category category = findCategoryByName(addRecipeRequest.getCategory());
         recipe.setCategory(category);
 
-        System.out.println(recipe);
-
-
         // 画像をS3にアップロード
         recipe.setImage("aqqua_pazza.jpg");
 
         // 署名付きURLをRecipeのimageフィールドにセット
+
         // レシピにセットされた各材料のrecipeフィールドに対象レシピを設定
         if (recipe.getIngredients() != null) {
             for (RecipeIngredient ingredient : recipe.getIngredients()) {
