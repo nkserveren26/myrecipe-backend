@@ -16,4 +16,6 @@ public interface RecipeService {
     public RecipeDetailsResponse getRecipeDetails(int id);
 
     public Category findCategoryByName(String categoryName);
+
+    public void AddRecipe(Recipe theRecipe);
 }

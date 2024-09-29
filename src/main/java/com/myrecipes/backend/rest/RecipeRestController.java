@@ -35,10 +35,8 @@ public class RecipeRestController {
     }
 
     @PostMapping
-    public void addRecipe(@RequestPart("recipe") AddRecipeRequestDTO addRecipeRequestDTO,@RequestPart("thumbnail") MultipartFile thumbnail) {
+    public void addRecipe(@RequestPart("recipe") AddRecipeRequestDTO addRecipeRequestDTO, @RequestPart("thumbnail") MultipartFile thumbnail) {
         System.out.println("Adding Recipe.");
-        System.out.println(addRecipeRequestDTO);
-        System.out.println(thumbnail);
 
         // Recipeインスタンス生成
         Recipe recipe = new Recipe();
@@ -65,12 +63,16 @@ public class RecipeRestController {
         Category category = recipeService.findCategoryByName(addRecipeRequestDTO.getCategory());
         recipe.setCategory(category);
 
+        System.out.println(recipe);
+
 
         // 画像をS3にアップロード
+        recipe.setImage("aqqua_pazza.jpg");
 
         // 署名付きURLをRecipeのimageフィールドにセット
 
         // レシピを新規登録
+        recipeService.AddRecipe(recipe);
     }
 
 }

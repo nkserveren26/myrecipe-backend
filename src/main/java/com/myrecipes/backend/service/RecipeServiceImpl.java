@@ -58,4 +58,9 @@ public class RecipeServiceImpl implements RecipeService{
     public Category findCategoryByName(String categoryName) {
         return categoryDAO.findCategoryByName(categoryName);
     }
+
+    @Override
+    public void AddRecipe(Recipe theRecipe) {
+        recipeDAO.save(theRecipe);
+    }
 }

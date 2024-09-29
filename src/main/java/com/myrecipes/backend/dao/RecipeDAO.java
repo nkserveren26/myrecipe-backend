@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface RecipeDAO {
 
-    List<Recipe> findAll();
+    public List<Recipe> findAll();
 
-    Recipe findById(int theId);
+    public Recipe findById(int theId);
 
-    Recipe save(Recipe theEmployee);
+    public void save(Recipe theEmployee);
 
-    void deleteById(int theId);
+    public void deleteById(int theId);
 
     public List<RecipeResponse> findByCategoryName(String categoryName);
 }

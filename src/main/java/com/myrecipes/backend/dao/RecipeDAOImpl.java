@@ -42,8 +42,8 @@ public class RecipeDAOImpl implements RecipeDAO {
     }
 
     @Override
-    public Recipe save(Recipe theEmployee) {
-        return null;
+    public void save(Recipe theRecipe) {
+        entityManager.persist(theRecipe);
     }
 
     @Override
