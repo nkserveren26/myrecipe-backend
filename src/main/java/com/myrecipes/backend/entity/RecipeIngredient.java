@@ -36,4 +36,13 @@ public class RecipeIngredient {
     public void setAmount(String amount) {
         this.amount = amount;
     }
+
+    @Override
+    public String toString() {
+        return "RecipeIngredient{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", amount='" + amount + '\'' +
+                '}';
+    }
 }

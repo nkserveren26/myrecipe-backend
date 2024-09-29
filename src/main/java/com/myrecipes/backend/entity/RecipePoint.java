@@ -30,4 +30,12 @@ public class RecipePoint {
     public void setPoint(String point) {
         this.point = point;
     }
+
+    @Override
+    public String toString() {
+        return "RecipePoint{" +
+                "id=" + id +
+                ", point='" + point + '\'' +
+                '}';
+    }
 }
