@@ -9,6 +9,9 @@ import com.myrecipes.backend.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -20,10 +23,19 @@ public class RecipeServiceImpl implements RecipeService{
     private RecipeDAO recipeDAO;
     private CategoryDAO categoryDAO;
 
+    private final S3Client s3Client;
+
     @Autowired
     public RecipeServiceImpl(RecipeDAO theRecipeDAO, CategoryDAO theCategoryDAO) {
         recipeDAO = theRecipeDAO;
         categoryDAO = theCategoryDAO;
+
+        // S3クライアントの設定
+        Region region = Region.AP_NORTHEAST_1;  // 適切なリージョンに変更
+        this.s3Client = S3Client.builder()
+                .region(region)
+                .credentialsProvider(ProfileCredentialsProvider.create())
+                .build();
     }
 
     @Override
