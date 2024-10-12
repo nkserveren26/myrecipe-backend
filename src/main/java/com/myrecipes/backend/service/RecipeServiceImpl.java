@@ -141,7 +141,6 @@ public class RecipeServiceImpl implements RecipeService{
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucketName)
                     .key(fileName)
-                    .acl("public-read")  // オプション: 必要に応じて権限を指定
                     .build();
 
             s3Client.putObject(putObjectRequest, Paths.get(imageFile.getOriginalFilename()));
