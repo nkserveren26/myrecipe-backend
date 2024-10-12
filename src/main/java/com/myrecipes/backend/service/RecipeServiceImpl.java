@@ -12,10 +12,13 @@ import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RecipeServiceImpl implements RecipeService{
@@ -24,6 +27,7 @@ public class RecipeServiceImpl implements RecipeService{
     private CategoryDAO categoryDAO;
 
     private final S3Client s3Client;
+    private final String bucketName = "testbucket-kn";
 
     @Autowired
     public RecipeServiceImpl(RecipeDAO theRecipeDAO, CategoryDAO theCategoryDAO) {
@@ -101,7 +105,8 @@ public class RecipeServiceImpl implements RecipeService{
         recipe.setCategory(category);
 
         // 画像をS3にアップロード
-        recipe.setImage("aqqua_pazza.jpg");
+        String imageUrl = uploadImageToS3(thumbnail);
+        recipe.setImage(imageUrl);
 
         // 署名付きURLをRecipeのimageフィールドにセット
 
@@ -125,5 +130,27 @@ public class RecipeServiceImpl implements RecipeService{
         }
 
         recipeDAO.save(recipe);
+    }
+
+    private String uploadImageToS3(MultipartFile imageFile) {
+        try {
+            // ユニークなファイル名を生成
+            String fileName = UUID.randomUUID().toString() + "-" + imageFile.getOriginalFilename();
+
+            // S3に画像ファイルをアップロード
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileName)
+                    .acl("public-read")  // オプション: 必要に応じて権限を指定
+                    .build();
+
+            s3Client.putObject(putObjectRequest, Paths.get(imageFile.getOriginalFilename()));
+
+            // アップロードされた画像のS3 URLを返す
+            return "https://" + bucketName + ".s3.amazonaws.com/" + fileName;
+
+        } catch (Exception e) {
+            throw new RuntimeException("S3への画像アップロードに失敗しました。", e);
+        }
     }
 }
