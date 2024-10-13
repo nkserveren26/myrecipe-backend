@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
+import java.io.ByteArrayInputStream;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -143,7 +145,12 @@ public class RecipeServiceImpl implements RecipeService{
                     .key(fileName)
                     .build();
 
-            s3Client.putObject(putObjectRequest, Paths.get(imageFile.getOriginalFilename()));
+            System.out.println(fileName);
+
+            byte[] bytes = imageFile.getBytes();
+            try (ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);) {
+                s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(inputStream, bytes.length));
+            }
 
             // アップロードされた画像のS3 URLを返す
             return "https://" + bucketName + ".s3.amazonaws.com/" + fileName;
