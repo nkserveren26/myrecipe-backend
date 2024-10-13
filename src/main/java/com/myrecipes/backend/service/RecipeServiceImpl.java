@@ -68,6 +68,8 @@ public class RecipeServiceImpl implements RecipeService{
         // 取得したレシピのコツ・ポイントを取得
         String point = recipe.getRecipePoint().getPoint();
 
+        System.out.println("Return Recipe Details");
+
         return new RecipeDetailsResponse(
                 id, recipe.getTitle(), recipe.getVideoUrl(), ingredients, steps, point
         );
