@@ -92,7 +92,8 @@ public class RecipeServiceImpl implements RecipeService{
         recipe.setSteps(addRecipeRequest.getSteps());
 
         // RecipePointインスタンスを生成し、RecipeのrecipePointフィールドにセット
-        RecipePoint recipePoint = new RecipePoint(addRecipeRequest.getPoint());
+        RecipePoint recipePoint = new RecipePoint();
+        recipePoint.setPoint(addRecipeRequest.getPoint());
         recipe.setRecipePoint(recipePoint);
 
         // 日本時間の現在時刻を取得

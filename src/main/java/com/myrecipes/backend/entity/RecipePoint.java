@@ -14,10 +14,6 @@ public class RecipePoint {
     @Column(name = "point")
     private String point;
 
-    public RecipePoint(String point) {
-        this.point = point;
-    }
-
     // Recipeとの1対1のリレーションを定義
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id", nullable = false)
