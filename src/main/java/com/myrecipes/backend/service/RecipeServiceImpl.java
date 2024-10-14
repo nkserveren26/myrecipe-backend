@@ -2,9 +2,7 @@ package com.myrecipes.backend.service;
 
 import com.myrecipes.backend.dao.CategoryDAO;
 import com.myrecipes.backend.dao.RecipeDAO;
-import com.myrecipes.backend.dto.AddRecipeRequest;
-import com.myrecipes.backend.dto.RecipeDetailsResponse;
-import com.myrecipes.backend.dto.RecipeResponse;
+import com.myrecipes.backend.dto.*;
 import com.myrecipes.backend.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeServiceImpl implements RecipeService{
@@ -59,11 +58,15 @@ public class RecipeServiceImpl implements RecipeService{
         // 指定されたidのレシピを取得
         Recipe recipe = recipeDAO.findById(id);
 
-        // 取得したレシピの材料を取得
-        List<RecipeIngredient> ingredients = recipe.getIngredients();
+        // RecipeIngredientをDTOに変換
+        List<RecipeIngredientDTO> ingredients = recipe.getIngredients().stream()
+                .map(ingredient -> new RecipeIngredientDTO(ingredient.getName(), ingredient.getAmount()))
+                .collect(Collectors.toList());
 
-        // 取得したレシピの手順を取得
-        List<RecipeStep> steps = recipe.getSteps();
+        // RecipeStepをDTOに変換
+        List<RecipeStepDTO> steps = recipe.getSteps().stream()
+                .map(step -> new RecipeStepDTO(step.getStepNumber(), step.getDescription()))
+                .collect(Collectors.toList());
 
         // 取得したレシピのコツ・ポイントを取得
         String point = recipe.getRecipePoint().getPoint();
