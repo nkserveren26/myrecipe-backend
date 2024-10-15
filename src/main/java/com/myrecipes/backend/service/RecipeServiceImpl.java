@@ -12,9 +12,15 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.services.s3.presigner.model.PresignedPutObjectRequest;
+import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
+
 
 import java.io.ByteArrayInputStream;
+import java.net.URL;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
@@ -28,6 +34,7 @@ public class RecipeServiceImpl implements RecipeService{
     private CategoryDAO categoryDAO;
 
     private final S3Client s3Client;
+    private final S3Presigner presigner;
     private final String bucketName = "testbucket-kn";
 
     @Autowired
@@ -38,6 +45,11 @@ public class RecipeServiceImpl implements RecipeService{
         // S3クライアントの設定
         Region region = Region.AP_NORTHEAST_1;  // 適切なリージョンに変更
         this.s3Client = S3Client.builder()
+                .region(region)
+                .credentialsProvider(ProfileCredentialsProvider.create())
+                .build();
+
+        this.presigner = S3Presigner.builder()
                 .region(region)
                 .credentialsProvider(ProfileCredentialsProvider.create())
                 .build();
@@ -163,6 +175,30 @@ public class RecipeServiceImpl implements RecipeService{
 
         } catch (Exception e) {
             throw new RuntimeException("S3への画像アップロードに失敗しました。", e);
+        }
+    }
+
+    private String generatePresignedUrl(String objectKey) {
+        try {
+            // putするオブジェクトの情報を組み立て
+            PutObjectRequest objReq = PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(objectKey)
+                    .build();
+
+            // 署名付きURLの生成
+            PutObjectPresignRequest presignReq = PutObjectPresignRequest.builder()
+                    .signatureDuration(Duration.ofDays(7))
+                    .putObjectRequest(objReq)
+                    .build();
+
+            // 発行
+            URL url = presigner.presignPutObject(presignReq).url();
+
+            return url.toString();
+
+        } catch (Exception e) {
+            throw new RuntimeException("署名付きURLの生成に失敗しました。", e);
         }
     }
 }
