@@ -94,7 +94,7 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public void AddRecipe(AddRecipeRequest addRecipeRequest, MultipartFile thumbnail) {
+    public void addRecipe(AddRecipeRequest addRecipeRequest, MultipartFile thumbnail) {
 
         // Recipeインスタンス生成
         Recipe recipe = new Recipe();

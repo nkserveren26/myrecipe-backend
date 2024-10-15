@@ -33,7 +33,7 @@ public class RecipeRestController {
     public void addRecipe(@RequestPart("recipe") AddRecipeRequest addRecipeRequest, @RequestPart("thumbnail") MultipartFile thumbnail) {
 
         // レシピを新規登録
-        recipeService.AddRecipe(addRecipeRequest, thumbnail);
+        recipeService.addRecipe(addRecipeRequest, thumbnail);
     }
 
 }
