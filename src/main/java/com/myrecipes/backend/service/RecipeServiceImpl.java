@@ -187,7 +187,7 @@ public class RecipeServiceImpl implements RecipeService{
 
             // 署名付きURLの生成
             PutObjectPresignRequest presignReq = PutObjectPresignRequest.builder()
-                    .signatureDuration(Duration.ofDays(7))
+                    .signatureDuration(Duration.ofMinutes(3600))
                     .putObjectRequest(objReq)
                     .build();
 

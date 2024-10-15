@@ -19,4 +19,5 @@ public interface RecipeService {
     public Category findCategoryByName(String categoryName);
 
     public void addRecipe(AddRecipeRequest addRecipeRequest, MultipartFile thumbnail);
+
 }
