@@ -13,13 +13,11 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
-import software.amazon.awssdk.services.s3.presigner.model.PresignedPutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
 
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -125,10 +123,13 @@ public class RecipeServiceImpl implements RecipeService{
         recipe.setCategory(category);
 
         // 画像をS3にアップロード
-        String imageUrl = uploadImageToS3(thumbnail);
-        recipe.setImage(imageUrl);
+        String imageObjectKey = uploadImageToS3(thumbnail);
+
+        // アップロードした画像の署名付きURL生成
+        String presignedUrl = generatePresignedUrl(imageObjectKey);
 
         // 署名付きURLをRecipeのimageフィールドにセット
+        recipe.setImage(presignedUrl);
 
         // レシピにセットされた各材料のrecipeフィールドに対象レシピを設定
         if (recipe.getIngredients() != null) {
@@ -154,24 +155,22 @@ public class RecipeServiceImpl implements RecipeService{
 
     private String uploadImageToS3(MultipartFile imageFile) {
         try {
-            // ユニークなファイル名を生成
-            String fileName = UUID.randomUUID().toString() + "-" + imageFile.getOriginalFilename();
+            // ユニークなオブジェクトキー名を生成
+            String objectKey = UUID.randomUUID().toString() + "-" + imageFile.getOriginalFilename();
 
             // S3に画像ファイルをアップロード
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucketName)
-                    .key(fileName)
+                    .key(objectKey)
                     .build();
-
-            System.out.println(fileName);
 
             byte[] bytes = imageFile.getBytes();
             try (ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);) {
                 s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(inputStream, bytes.length));
             }
 
-            // アップロードされた画像のS3 URLを返す
-            return "https://" + bucketName + ".s3.amazonaws.com/" + fileName;
+            // アップロードされた画像のS3オブジェクトキー名を返す
+            return objectKey;
 
         } catch (Exception e) {
             throw new RuntimeException("S3への画像アップロードに失敗しました。", e);
