@@ -196,8 +196,6 @@ public class RecipeServiceImpl implements RecipeService{
             // 発行
             URL url = presigner.presignGetObject(presignReq).url();
 
-            System.out.println(url.toString());
-
             return url.toString();
 
         } catch (Exception e) {
