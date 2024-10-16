@@ -11,8 +11,10 @@ import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
 
 
@@ -180,19 +182,21 @@ public class RecipeServiceImpl implements RecipeService{
     private String generatePresignedUrl(String objectKey) {
         try {
             // putするオブジェクトの情報を組み立て
-            PutObjectRequest objReq = PutObjectRequest.builder()
+            GetObjectRequest objReq = GetObjectRequest.builder()
                     .bucket(bucketName)
                     .key(objectKey)
                     .build();
 
             // 署名付きURLの生成
-            PutObjectPresignRequest presignReq = PutObjectPresignRequest.builder()
+            GetObjectPresignRequest presignReq = GetObjectPresignRequest.builder()
                     .signatureDuration(Duration.ofMinutes(3600))
-                    .putObjectRequest(objReq)
+                    .getObjectRequest(objReq)
                     .build();
 
             // 発行
-            URL url = presigner.presignPutObject(presignReq).url();
+            URL url = presigner.presignGetObject(presignReq).url();
+
+            System.out.println(url.toString());
 
             return url.toString();
 
