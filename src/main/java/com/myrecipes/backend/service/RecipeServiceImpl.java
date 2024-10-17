@@ -24,8 +24,10 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class RecipeServiceImpl implements RecipeService{
@@ -201,5 +203,22 @@ public class RecipeServiceImpl implements RecipeService{
         } catch (Exception e) {
             throw new RuntimeException("署名付きURLの生成に失敗しました。", e);
         }
+    }
+
+    private boolean isExpired(String imageUrl) {
+        try {
+            // URLをパースしてクエリパラメータを取得
+            URL url = new URL(imageUrl);
+            Map<String, String> queryParams = Stream.of(url.getQuery().split("&"))
+                    .map(param -> param.split("="))
+                    .collect(Collectors.toMap(p -> p[0], p -> p[1]));
+
+        } catch (Exception e) {
+            // URLが不正またはパラメータ取得に失敗した場合は期限切れと見なす
+            return true;
+        }
+
+
+        return false;
     }
 }
