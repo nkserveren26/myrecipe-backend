@@ -181,7 +181,7 @@ public class RecipeServiceImpl implements RecipeService{
 
     private String generatePresignedUrl(String objectKey) {
         try {
-            // putするオブジェクトの情報を組み立て
+            // getするオブジェクトの情報を組み立て
             GetObjectRequest objReq = GetObjectRequest.builder()
                     .bucket(bucketName)
                     .key(objectKey)
@@ -189,7 +189,7 @@ public class RecipeServiceImpl implements RecipeService{
 
             // 署名付きURLの生成
             GetObjectPresignRequest presignReq = GetObjectPresignRequest.builder()
-                    .signatureDuration(Duration.ofMinutes(3600))
+                    .signatureDuration(Duration.ofMinutes(1440))
                     .getObjectRequest(objReq)
                     .build();
 
