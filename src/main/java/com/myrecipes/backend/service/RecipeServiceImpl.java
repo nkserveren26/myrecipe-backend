@@ -21,6 +21,7 @@ import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignReques
 import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
@@ -229,13 +230,20 @@ public class RecipeServiceImpl implements RecipeService{
 
             long expiresInSeconds = Long.parseLong(expiresStr);  // 文字列をlongに変換
 
+            // `X-Amz-Date` パラメータをISO8601形式からInstantに変換
+            Instant requestTime = Instant.parse(amzDate.substring(0, 4) + "-" + amzDate.substring(4, 6) + "-"
+                    + amzDate.substring(6, 8) + "T" + amzDate.substring(9, 11) + ":" + amzDate.substring(11, 13)
+                    + ":" + amzDate.substring(13) + "Z");
+
+            // 有効期限を計算 (リクエスト時刻 + X-Amz-Expires 秒)
+            Instant expirationTime = requestTime.plus(Duration.ofSeconds(expiresInSeconds));
+
+            // 現在時刻と有効期限を比較して期限切れかを判断
+            return Instant.now().isAfter(expirationTime);
 
         } catch (Exception e) {
             // URLが不正またはパラメータ取得に失敗した場合は期限切れと見なす
             return true;
         }
-
-
-        return false;
     }
 }
