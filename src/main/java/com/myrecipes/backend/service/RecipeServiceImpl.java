@@ -66,6 +66,17 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public List<RecipeResponse> findRecipeByCategoryName(String categoryName) {
         List<RecipeResponse> recipes = recipeDAO.findByCategoryName(categoryName);
+
+        // 各レシピの画像URLをチェックして、必要であれば再生成する
+        recipes.forEach(recipe -> {
+            String imageUrl = recipe.getImage();
+
+            if (isExpired(imageUrl)) {
+                // URLが期限切れの場合、新しい署名付きURLを生成
+                String newSignedUrl = generatePresignedUrl(recipe.getImage());
+                recipe.setImage(newSignedUrl);
+            }
+        });
         return recipeDAO.findByCategoryName(categoryName);
     }
 
