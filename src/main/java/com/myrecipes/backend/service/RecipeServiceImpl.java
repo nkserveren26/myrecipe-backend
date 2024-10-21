@@ -64,6 +64,7 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Override
     public List<RecipeResponse> findRecipeByCategoryName(String categoryName) {
+        List<RecipeResponse> recipes = recipeDAO.findByCategoryName(categoryName);
         return recipeDAO.findByCategoryName(categoryName);
     }
 
