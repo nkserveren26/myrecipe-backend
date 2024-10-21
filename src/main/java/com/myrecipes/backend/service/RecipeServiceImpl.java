@@ -214,6 +214,22 @@ public class RecipeServiceImpl implements RecipeService{
                     .map(param -> param.split("="))
                     .collect(Collectors.toMap(p -> p[0], p -> p[1]));
 
+            // X-Amz-ExpiresとX-Amz-Dateパラメータが存在するか確認
+            if (!queryParams.containsKey("X-Amz-Expires") || !queryParams.containsKey("X-Amz-Date")) {
+                return true;  // パラメータがない場合は期限切れと判断
+            }
+
+            // X-Amz-ExpiresとX-Amz-Dateパラメータの値を取得
+            String expiresStr = queryParams.get("X-Amz-Expires");
+            String amzDate = queryParams.get("X-Amz-Date");
+
+            if (expiresStr == null || amzDate == null) {
+                return true;  // パラメータの値がない場合は期限切れと判断
+            }
+
+            long expiresInSeconds = Long.parseLong(expiresStr);  // 文字列をlongに変換
+
+
         } catch (Exception e) {
             // URLが不正またはパラメータ取得に失敗した場合は期限切れと見なす
             return true;
