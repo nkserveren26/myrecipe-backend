@@ -27,6 +27,7 @@ public class RecipeDAOImpl implements RecipeDAO {
         return theQuery.getResultList();
     }
 
+    // 特定のカテゴリに属するレシピの一覧を取得
     @Override
     public List<RecipeResponse> findByCategoryName(String categoryName) {
         // 指定されたカテゴリに該当するレシピを取得するSQLを定義
@@ -37,15 +38,24 @@ public class RecipeDAOImpl implements RecipeDAO {
                 .getResultList();
     }
 
+    // 特定のIDのレシピを検索
     @Override
     public Recipe findById(int theId) {
         return entityManager.find(Recipe.class, theId);
     }
 
+    // レシピを新規追加
     @Override
     @Transactional
     public void save(Recipe theRecipe) {
         entityManager.persist(theRecipe);
+    }
+
+    // 既存レシピを更新
+    @Override
+    @Transactional
+    public void update(Recipe theRecipe) {
+        entityManager.merge(theRecipe);  // 既存のレシピを更新
     }
 
     @Override
