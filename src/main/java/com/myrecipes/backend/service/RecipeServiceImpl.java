@@ -19,6 +19,7 @@ import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignReques
 
 
 import java.io.ByteArrayInputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
@@ -73,7 +74,8 @@ public class RecipeServiceImpl implements RecipeService{
 
             if (isExpired(imageUrl)) {
                 // URLが期限切れの場合、新しい署名付きURLを生成
-                String newSignedUrl = generatePresignedUrl(recipe.getImage());
+                String imageObjectKey = extractObjectKey(imageUrl);
+                String newSignedUrl = generatePresignedUrl(imageObjectKey);
                 recipe.setImage(newSignedUrl);
             }
         });
@@ -255,6 +257,16 @@ public class RecipeServiceImpl implements RecipeService{
         } catch (Exception e) {
             // URLが不正またはパラメータ取得に失敗した場合は期限切れと見なす
             return true;
+        }
+    }
+
+    public String extractObjectKey(String imageUrl) {
+        try {
+            URL url = new URL(imageUrl);
+            String path = url.getPath();  // "/<object-key>" という形式
+            return path.substring(1);  // 先頭の '/' を除いた部分がオブジェクトキー
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Invalid image URL", e);
         }
     }
 }
