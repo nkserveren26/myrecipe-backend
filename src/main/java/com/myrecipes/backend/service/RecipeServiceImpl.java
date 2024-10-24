@@ -66,7 +66,7 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Override
     public List<RecipeResponse> findRecipeByCategoryName(String categoryName) {
-        List<RecipeResponse> recipes = recipeDAO.findByCategoryName(categoryName);
+        List<Recipe> recipes = recipeDAO.findByCategoryName(categoryName);
 
         // 各レシピの画像URLをチェックして、必要であれば再生成する
         recipes.forEach(recipe -> {
@@ -77,9 +77,23 @@ public class RecipeServiceImpl implements RecipeService{
                 String imageObjectKey = extractObjectKey(imageUrl);
                 String newSignedUrl = generatePresignedUrl(imageObjectKey);
                 recipe.setImage(newSignedUrl);
+
+                // レシピテーブルを更新
+                recipeDAO.update(recipe);
             }
         });
-        return recipeDAO.findByCategoryName(categoryName);
+
+        //Recipe -> RecipeResponse に変換してレスポンスを作成
+        List<RecipeResponse> recipeResponses = recipes.stream()
+                .map(recipe -> new RecipeResponse(
+                        recipe.getId(),
+                        recipe.getTitle(),
+                        recipe.getImage(),      // 更新された署名付きURLがここに含まれる
+                        recipe.getCreatedAt()
+                )).collect(Collectors.toList());
+
+
+        return recipeResponses;
     }
 
     @Override

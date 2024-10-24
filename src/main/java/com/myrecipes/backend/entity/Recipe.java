@@ -45,6 +45,10 @@ public class Recipe {
     @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private RecipePoint recipePoint;
 
+    public int getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
