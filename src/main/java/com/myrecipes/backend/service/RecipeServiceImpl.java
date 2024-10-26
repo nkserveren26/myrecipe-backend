@@ -218,7 +218,7 @@ public class RecipeServiceImpl implements RecipeService{
 
             // 署名付きURLの生成
             GetObjectPresignRequest presignReq = GetObjectPresignRequest.builder()
-                    .signatureDuration(Duration.ofMinutes(10680))
+                    .signatureDuration(Duration.ofMinutes(10080))
                     .getObjectRequest(objReq)
                     .build();
 
@@ -240,10 +240,14 @@ public class RecipeServiceImpl implements RecipeService{
                     .map(param -> param.split("="))
                     .collect(Collectors.toMap(p -> p[0], p -> p[1]));
 
+            System.out.println(queryParams);
+
             // X-Amz-ExpiresとX-Amz-Dateパラメータが存在するか確認
             if (!queryParams.containsKey("X-Amz-Expires") || !queryParams.containsKey("X-Amz-Date")) {
                 return true;  // パラメータがない場合は期限切れと判断
             }
+
+            System.out.println("Getting Parameters");
 
             // X-Amz-ExpiresとX-Amz-Dateパラメータの値を取得
             String expiresStr = queryParams.get("X-Amz-Expires");
@@ -253,12 +257,19 @@ public class RecipeServiceImpl implements RecipeService{
                 return true;  // パラメータの値がない場合は期限切れと判断
             }
 
+            System.out.println("Converting expire value");
+
             long expiresInSeconds = Long.parseLong(expiresStr);  // 文字列をlongに変換
 
-            // `X-Amz-Date` パラメータをISO8601形式からInstantに変換
-            Instant requestTime = Instant.parse(amzDate.substring(0, 4) + "-" + amzDate.substring(4, 6) + "-"
-                    + amzDate.substring(6, 8) + "T" + amzDate.substring(9, 11) + ":" + amzDate.substring(11, 13)
-                    + ":" + amzDate.substring(13) + "Z");
+            // X-Amz-Date パラメータをInstant.parseが想定する形式に変換
+            String formattedAmzDate = amzDate.substring(0, 4) + "-" + amzDate.substring(4, 6) + "-" +
+                    amzDate.substring(6, 8) + "T" + amzDate.substring(9, 11) + ":" +
+                    amzDate.substring(11, 13) + ":" + amzDate.substring(13, 15) + "Z";
+
+            // Instant に変換
+            Instant requestTime = Instant.parse(formattedAmzDate);
+
+            System.out.println("Comparing Datetime");
 
             // 有効期限を計算 (リクエスト時刻 + X-Amz-Expires 秒)
             Instant expirationTime = requestTime.plus(Duration.ofSeconds(expiresInSeconds));
@@ -268,6 +279,7 @@ public class RecipeServiceImpl implements RecipeService{
 
         } catch (Exception e) {
             // URLが不正またはパラメータ取得に失敗した場合は期限切れと見なす
+            System.out.println(e);
             return true;
         }
     }
