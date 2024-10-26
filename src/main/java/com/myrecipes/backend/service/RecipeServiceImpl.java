@@ -84,16 +84,14 @@ public class RecipeServiceImpl implements RecipeService{
         });
 
         //Recipe -> RecipeResponse に変換してレスポンスを作成
-        List<RecipeResponse> recipeResponses = recipes.stream()
+        return recipes.stream()
                 .map(recipe -> new RecipeResponse(
                         recipe.getId(),
                         recipe.getTitle(),
                         recipe.getImage(),      // 更新された署名付きURLがここに含まれる
                         recipe.getCreatedAt()
-                )).collect(Collectors.toList());
-
-
-        return recipeResponses;
+                ))
+                .collect(Collectors.toList());
     }
 
     @Override
