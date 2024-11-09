@@ -3,6 +3,7 @@ package com.myrecipes.backend.service;
 import com.myrecipes.backend.dto.AddRecipeRequest;
 import com.myrecipes.backend.dto.RecipeDetailsResponse;
 import com.myrecipes.backend.dto.RecipeResponse;
+import com.myrecipes.backend.dto.UpdateRecipeRequest;
 import com.myrecipes.backend.entity.Category;
 import com.myrecipes.backend.entity.Recipe;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,5 +20,7 @@ public interface RecipeService {
     public Category findCategoryByName(String categoryName);
 
     public void addRecipe(AddRecipeRequest addRecipeRequest, MultipartFile thumbnail);
+
+    public void updateRecipe(int id, UpdateRecipeRequest updateRecipeRequest, MultipartFile thumbnail);
 
 }

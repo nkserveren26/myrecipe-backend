@@ -182,6 +182,11 @@ public class RecipeServiceImpl implements RecipeService{
         recipeDAO.save(recipe);
     }
 
+    @Override
+    public void updateRecipe(int id, UpdateRecipeRequest updateRecipeRequest, MultipartFile thumbnail) {
+
+    }
+
     private String uploadImageToS3(MultipartFile imageFile) {
         try {
             // ユニークなオブジェクトキー名を生成
