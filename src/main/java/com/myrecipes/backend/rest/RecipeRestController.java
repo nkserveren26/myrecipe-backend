@@ -36,4 +36,9 @@ public class RecipeRestController {
         recipeService.addRecipe(addRecipeRequest, thumbnail);
     }
 
+    @PutMapping("/{id}")
+    public void updateRecipe(@PathVariable int id, @RequestPart("recipe") AddRecipeRequest addRecipeRequest, @RequestPart("thumbnail") MultipartFile thumbnail) {
+        System.out.println("Completed updating recipe.");
+    }
+
 }
