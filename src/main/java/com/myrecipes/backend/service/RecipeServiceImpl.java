@@ -199,6 +199,19 @@ public class RecipeServiceImpl implements RecipeService{
         recipePoint.setPoint(updateRecipeRequest.getPoint());
         updateRecipe.setRecipePoint(recipePoint);
 
+        // categoryフィールドにCategoryインスタンスをセット
+        Category category = findCategoryByName(updateRecipeRequest.getCategory());
+        updateRecipe.setCategory(category);
+
+        // 画像をS3にアップロード
+        String imageObjectKey = uploadImageToS3(thumbnail);
+
+        // アップロードした画像の署名付きURL生成
+        String presignedUrl = generatePresignedUrl(imageObjectKey);
+
+        // 署名付きURLをRecipeのimageフィールドにセット
+        updateRecipe.setImage(presignedUrl);
+
     }
 
     private String uploadImageToS3(MultipartFile imageFile) {
