@@ -185,6 +185,8 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public void updateRecipe(int id, UpdateRecipeRequest updateRecipeRequest, MultipartFile thumbnail) {
 
+        Recipe updateRecipe = recipeDAO.findById(id);
+
     }
 
     private String uploadImageToS3(MultipartFile imageFile) {
