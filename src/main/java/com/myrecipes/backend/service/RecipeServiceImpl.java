@@ -187,6 +187,18 @@ public class RecipeServiceImpl implements RecipeService{
 
         Recipe updateRecipe = recipeDAO.findById(id);
 
+        // Recipeインスタンスの各フィールドに値をセット
+        updateRecipe.setTitle(updateRecipeRequest.getTitle());
+        updateRecipe.setServings(updateRecipeRequest.getServings());
+        updateRecipe.setVideoUrl(updateRecipeRequest.getVideoUrl());
+        updateRecipe.setIngredients(updateRecipeRequest.getIngredients());
+        updateRecipe.setSteps(updateRecipeRequest.getSteps());
+
+        // RecipePointインスタンスを生成し、RecipeのrecipePointフィールドにセット
+        RecipePoint recipePoint = new RecipePoint();
+        recipePoint.setPoint(updateRecipeRequest.getPoint());
+        updateRecipe.setRecipePoint(recipePoint);
+
     }
 
     private String uploadImageToS3(MultipartFile imageFile) {
