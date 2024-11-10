@@ -151,14 +151,17 @@ public class RecipeServiceImpl implements RecipeService{
         Category category = findCategoryByName(addRecipeRequest.getCategory());
         recipe.setCategory(category);
 
-        // 画像をS3にアップロード
-        String imageObjectKey = uploadImageToS3(thumbnail);
+        // サムネイル画像が指定されている場合にのみ画像処理を実行
+        if (thumbnail != null && !thumbnail.isEmpty()) {
+            // 画像をS3にアップロード
+            String imageObjectKey = uploadImageToS3(thumbnail);
 
-        // アップロードした画像の署名付きURL生成
-        String presignedUrl = generatePresignedUrl(imageObjectKey);
+            // アップロードした画像の署名付きURLを生成
+            String presignedUrl = generatePresignedUrl(imageObjectKey);
 
-        // 署名付きURLをRecipeのimageフィールドにセット
-        recipe.setImage(presignedUrl);
+            // 署名付きURLをRecipeのimageフィールドにセット
+            recipe.setImage(presignedUrl);
+        }
 
         // レシピにセットされた各材料のrecipeフィールドに対象レシピを設定
         if (recipe.getIngredients() != null) {
@@ -203,14 +206,17 @@ public class RecipeServiceImpl implements RecipeService{
         Category category = findCategoryByName(updateRecipeRequest.getCategory());
         updateRecipe.setCategory(category);
 
-        // 画像をS3にアップロード
-        String imageObjectKey = uploadImageToS3(thumbnail);
+        // サムネイル画像が指定されている場合にのみ画像処理を実行
+        if (thumbnail != null && !thumbnail.isEmpty()) {
+            // 画像をS3にアップロード
+            String imageObjectKey = uploadImageToS3(thumbnail);
 
-        // アップロードした画像の署名付きURL生成
-        String presignedUrl = generatePresignedUrl(imageObjectKey);
+            // アップロードした画像の署名付きURLを生成
+            String presignedUrl = generatePresignedUrl(imageObjectKey);
 
-        // 署名付きURLをRecipeのimageフィールドにセット
-        updateRecipe.setImage(presignedUrl);
+            // 署名付きURLをRecipeのimageフィールドにセット
+            updateRecipe.setImage(presignedUrl);
+        }
 
     }
 
