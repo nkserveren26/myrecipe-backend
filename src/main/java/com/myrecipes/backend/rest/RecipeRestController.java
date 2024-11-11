@@ -3,6 +3,7 @@ package com.myrecipes.backend.rest;
 import com.myrecipes.backend.dto.AddRecipeRequest;
 import com.myrecipes.backend.dto.RecipeDetailsResponse;
 import com.myrecipes.backend.dto.RecipeResponse;
+import com.myrecipes.backend.dto.UpdateRecipeRequest;
 import com.myrecipes.backend.service.RecipeService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +38,10 @@ public class RecipeRestController {
     }
 
     @PutMapping("/{id}")
-    public void updateRecipe(@PathVariable int id, @RequestPart("recipe") AddRecipeRequest addRecipeRequest, @RequestPart("thumbnail") MultipartFile thumbnail) {
+    public void updateRecipe(@PathVariable int id, @RequestPart("recipe") UpdateRecipeRequest updateRecipeRequest, @RequestPart("thumbnail") MultipartFile thumbnail) {
+
+        // レシピを更新
+        recipeService.updateRecipe(id, updateRecipeRequest, thumbnail);
         System.out.println("Completed updating recipe.");
     }
 

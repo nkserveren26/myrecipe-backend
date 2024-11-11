@@ -230,6 +230,8 @@ public class RecipeServiceImpl implements RecipeService{
             updateRecipe.getRecipePoint().setRecipe(updateRecipe);
         }
 
+        recipeDAO.update(updateRecipe);
+
     }
 
     private String uploadImageToS3(MultipartFile imageFile) {
