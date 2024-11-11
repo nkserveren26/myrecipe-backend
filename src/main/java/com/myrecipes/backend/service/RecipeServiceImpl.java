@@ -218,6 +218,18 @@ public class RecipeServiceImpl implements RecipeService{
             updateRecipe.setImage(presignedUrl);
         }
 
+        // レシピにセットされた各ステップのrecipeフィールドに対象レシピを設定
+        if (updateRecipe.getSteps() != null) {
+            for (RecipeStep step : updateRecipe.getSteps()) {
+                step.setRecipe(updateRecipe);
+            }
+        }
+
+        // レシピにセットされた、レシピのコツのrecipeフィールドに対象レシピを設定
+        if (updateRecipe.getRecipePoint() != null) {
+            updateRecipe.getRecipePoint().setRecipe(updateRecipe);
+        }
+
     }
 
     private String uploadImageToS3(MultipartFile imageFile) {
