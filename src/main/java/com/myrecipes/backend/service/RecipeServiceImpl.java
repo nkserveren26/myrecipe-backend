@@ -80,7 +80,13 @@ public class RecipeServiceImpl implements RecipeService{
                 // テーブル更新用データ作成
                 Recipe updateRecipe = new Recipe();
                 updateRecipe.setId(recipe.getId());
+                updateRecipe.setTitle(recipe.getTitle());
                 updateRecipe.setImage(newSignedUrl);
+
+                // カテゴリ取得
+                Category category = categoryDAO.findCategoryByName(categoryName);
+                updateRecipe.setCategory(category);
+
 
                 // レシピテーブルを更新
                 recipeDAO.update(updateRecipe);
