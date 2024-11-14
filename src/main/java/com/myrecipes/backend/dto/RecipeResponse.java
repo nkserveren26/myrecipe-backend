@@ -6,6 +6,8 @@ public class RecipeResponse {
     private int id;
     private String title;
     private String image;
+    private int servings;
+    private String videoUrl;
     private LocalDateTime createdAt;
 
     public RecipeResponse(int id, String title, String image, LocalDateTime createdAt) {
@@ -45,5 +47,21 @@ public class RecipeResponse {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public int getServings() {
+        return servings;
+    }
+
+    public void setServings(int servings) {
+        this.servings = servings;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 }

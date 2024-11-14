@@ -77,9 +77,18 @@ public class RecipeServiceImpl implements RecipeService{
                 String imageObjectKey = extractObjectKey(imageUrl);
                 String newSignedUrl = generatePresignedUrl(imageObjectKey);
 
+                // 更新対象レシピのカテゴリーインスタンスを取得
+                Category category = categoryDAO.findCategoryByName(categoryName);
+
                 // テーブル更新用データ作成
-                Recipe updateRecipe = recipeDAO.findById(recipe.getId());
+                Recipe updateRecipe = new Recipe();
+                updateRecipe.setId(recipe.getId());
+                updateRecipe.setTitle(recipe.getTitle());
+                updateRecipe.setServings(recipe.getServings());
+                updateRecipe.setVideoUrl(recipe.getVideoUrl());
                 updateRecipe.setImage(newSignedUrl);
+                updateRecipe.setCreatedAt(recipe.getCreatedAt());
+                updateRecipe.setCategory(category);
 
                 // レシピテーブルを更新
                 recipeDAO.update(updateRecipe);
