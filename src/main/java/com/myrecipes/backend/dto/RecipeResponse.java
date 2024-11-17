@@ -10,10 +10,12 @@ public class RecipeResponse {
     private String videoUrl;
     private LocalDateTime createdAt;
 
-    public RecipeResponse(int id, String title, String image, LocalDateTime createdAt) {
+    public RecipeResponse(int id, String title, String image, int servings, String videoUrl, LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
         this.image = image;
+        this.servings = servings;
+        this.videoUrl = videoUrl;
         this.createdAt = createdAt;
     }
 
