@@ -38,7 +38,7 @@ public class RecipeRestController {
     }
 
     @PutMapping("/{id}")
-    public void updateRecipe(@PathVariable int id, @RequestPart("recipe") UpdateRecipeRequest updateRecipeRequest, @RequestPart("thumbnail") MultipartFile thumbnail) {
+    public void updateRecipe(@PathVariable int id, @RequestPart("recipe") UpdateRecipeRequest updateRecipeRequest, @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail) {
 
         // レシピを更新
         recipeService.updateRecipe(id, updateRecipeRequest, thumbnail);
