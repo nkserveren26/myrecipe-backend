@@ -226,6 +226,13 @@ public class RecipeServiceImpl implements RecipeService{
             updateRecipe.setImage(presignedUrl);
         }
 
+        // レシピにセットされた各材料のrecipeフィールドに対象レシピを設定
+        if (updateRecipe.getIngredients() != null) {
+            for (RecipeIngredient ingredient : updateRecipe.getIngredients()) {
+                ingredient.setRecipe(updateRecipe);
+            }
+        }
+
         // レシピにセットされた各ステップのrecipeフィールドに対象レシピを設定
         if (updateRecipe.getSteps() != null) {
             for (RecipeStep step : updateRecipe.getSteps()) {
