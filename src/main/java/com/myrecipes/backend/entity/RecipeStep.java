@@ -21,7 +21,13 @@ public class RecipeStep {
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getStepNumber() {
         return stepNumber;

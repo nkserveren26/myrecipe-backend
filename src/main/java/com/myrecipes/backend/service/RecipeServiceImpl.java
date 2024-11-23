@@ -112,7 +112,7 @@ public class RecipeServiceImpl implements RecipeService{
 
         // RecipeStepをDTOに変換
         List<RecipeStepDTO> steps = recipe.getSteps().stream()
-                .map(step -> new RecipeStepDTO(step.getStepNumber(), step.getDescription()))
+                .map(step -> new RecipeStepDTO(step.getId(), step.getStepNumber(), step.getDescription()))
                 .collect(Collectors.toList());
 
         // 取得したレシピのコツ・ポイントを取得
