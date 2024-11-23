@@ -107,7 +107,7 @@ public class RecipeServiceImpl implements RecipeService{
 
         // RecipeIngredientをDTOに変換
         List<RecipeIngredientDTO> ingredients = recipe.getIngredients().stream()
-                .map(ingredient -> new RecipeIngredientDTO(ingredient.getName(), ingredient.getAmount()))
+                .map(ingredient -> new RecipeIngredientDTO(ingredient.getId(), ingredient.getName(), ingredient.getAmount()))
                 .collect(Collectors.toList());
 
         // RecipeStepをDTOに変換
@@ -202,6 +202,10 @@ public class RecipeServiceImpl implements RecipeService{
         updateRecipe.setTitle(updateRecipeRequest.getTitle());
         updateRecipe.setServings(updateRecipeRequest.getServings());
         updateRecipe.setVideoUrl(updateRecipeRequest.getVideoUrl());
+        List<RecipeIngredient> ingredients = updateRecipe.getIngredients();
+        // 既存のingredientsにupdateRecipeRequest内の材料データをセットしたい
+
+
         updateRecipe.setIngredients(updateRecipeRequest.getIngredients());
         updateRecipe.setSteps(updateRecipeRequest.getSteps());
 
