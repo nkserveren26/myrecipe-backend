@@ -4,9 +4,11 @@ import com.myrecipes.backend.entity.RecipeIngredient;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class RecipeIngredientDAOImpl implements RecipeIngredientDAO {
 
     private EntityManager entityManager;

@@ -2,6 +2,7 @@ package com.myrecipes.backend.service;
 
 import com.myrecipes.backend.dao.CategoryDAO;
 import com.myrecipes.backend.dao.RecipeDAO;
+import com.myrecipes.backend.dao.RecipeIngredientDAO;
 import com.myrecipes.backend.dto.*;
 import com.myrecipes.backend.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,15 +37,17 @@ public class RecipeServiceImpl implements RecipeService{
 
     private RecipeDAO recipeDAO;
     private CategoryDAO categoryDAO;
+    private RecipeIngredientDAO recipeIngredientDAO;
 
     private final S3Client s3Client;
     private final S3Presigner presigner;
     private final String bucketName = "testbucket-kn";
 
     @Autowired
-    public RecipeServiceImpl(RecipeDAO theRecipeDAO, CategoryDAO theCategoryDAO) {
+    public RecipeServiceImpl(RecipeDAO theRecipeDAO, CategoryDAO theCategoryDAO, RecipeIngredientDAO theRecipeIngredientDAO) {
         recipeDAO = theRecipeDAO;
         categoryDAO = theCategoryDAO;
+        recipeIngredientDAO = theRecipeIngredientDAO;
 
         // S3クライアントの設定
         Region region = Region.AP_NORTHEAST_1;  // 適切なリージョンに変更
@@ -203,7 +206,12 @@ public class RecipeServiceImpl implements RecipeService{
         updateRecipe.setServings(updateRecipeRequest.getServings());
         updateRecipe.setVideoUrl(updateRecipeRequest.getVideoUrl());
         List<RecipeIngredient> ingredients = updateRecipe.getIngredients();
-        // 既存のingredientsにupdateRecipeRequest内の材料データをセットしたい
+
+        // 現在の材料データを取得
+        List<RecipeIngredient> existingIngredients = recipeIngredientDAO.findByRecipeId(id);
+
+        // 新しい材料データ
+        List<RecipeIngredient> newIngredients = updateRecipeRequest.getIngredients();
 
 
         updateRecipe.setIngredients(updateRecipeRequest.getIngredients());
