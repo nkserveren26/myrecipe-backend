@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -212,6 +213,26 @@ public class RecipeServiceImpl implements RecipeService{
 
         // 新しい材料データ
         List<RecipeIngredient> newIngredients = updateRecipeRequest.getIngredients();
+
+        // 更新および追加
+        for (RecipeIngredient newIngredient : newIngredients) {
+            Optional<RecipeIngredient> existingIngredient = existingIngredients.stream()
+                    .filter(i -> i.getId() == newIngredient.getId()) // IDで一致を確認
+                    .findFirst();
+
+            if (existingIngredient.isPresent()) {
+                // 既存データの更新
+                RecipeIngredient ingredient = existingIngredient.get();
+                ingredient.setName(newIngredient.getName());
+                ingredient.setAmount(newIngredient.getAmount());
+            } else {
+                // 新規データの追加
+                RecipeIngredient newEntity = new RecipeIngredient();
+                newEntity.setName(newIngredient.getName());
+                newEntity.setAmount(newIngredient.getAmount());
+                newEntity.setRecipe(updateRecipe);
+            }
+        }
 
 
         updateRecipe.setIngredients(updateRecipeRequest.getIngredients());
