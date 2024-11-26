@@ -206,7 +206,6 @@ public class RecipeServiceImpl implements RecipeService{
         updateRecipe.setTitle(updateRecipeRequest.getTitle());
         updateRecipe.setServings(updateRecipeRequest.getServings());
         updateRecipe.setVideoUrl(updateRecipeRequest.getVideoUrl());
-        List<RecipeIngredient> ingredients = updateRecipe.getIngredients();
 
         // 現在の材料データを取得
         List<RecipeIngredient> existingIngredients = recipeIngredientDAO.findByRecipeId(id);
@@ -225,17 +224,17 @@ public class RecipeServiceImpl implements RecipeService{
                 RecipeIngredient ingredient = existingIngredient.get();
                 ingredient.setName(newIngredient.getName());
                 ingredient.setAmount(newIngredient.getAmount());
+                recipeIngredientDAO.update(ingredient);
             } else {
                 // 新規データの追加
                 RecipeIngredient newEntity = new RecipeIngredient();
                 newEntity.setName(newIngredient.getName());
                 newEntity.setAmount(newIngredient.getAmount());
                 newEntity.setRecipe(updateRecipe);
+                recipeIngredientDAO.save(newEntity);
             }
         }
 
-
-        updateRecipe.setIngredients(updateRecipeRequest.getIngredients());
         updateRecipe.setSteps(updateRecipeRequest.getSteps());
 
         // RecipePointインスタンスを生成し、RecipeのrecipePointフィールドにセット
@@ -259,12 +258,7 @@ public class RecipeServiceImpl implements RecipeService{
             updateRecipe.setImage(presignedUrl);
         }
 
-        // レシピにセットされた各材料のrecipeフィールドに対象レシピを設定
-        if (updateRecipe.getIngredients() != null) {
-            for (RecipeIngredient ingredient : updateRecipe.getIngredients()) {
-                ingredient.setRecipe(updateRecipe);
-            }
-        }
+
 
         // レシピにセットされた各ステップのrecipeフィールドに対象レシピを設定
         if (updateRecipe.getSteps() != null) {
