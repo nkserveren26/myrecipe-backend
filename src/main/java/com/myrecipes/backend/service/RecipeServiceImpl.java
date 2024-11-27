@@ -213,7 +213,7 @@ public class RecipeServiceImpl implements RecipeService{
         // 新しい材料データ
         List<RecipeIngredient> newIngredients = updateRecipeRequest.getIngredients();
 
-        // 更新および追加
+        // 材料データの更新および追加
         for (RecipeIngredient newIngredient : newIngredients) {
             Optional<RecipeIngredient> existingIngredient = existingIngredients.stream()
                     .filter(i -> i.getId() == newIngredient.getId()) // IDで一致を確認
