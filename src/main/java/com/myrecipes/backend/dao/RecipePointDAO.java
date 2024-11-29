@@ -8,4 +8,6 @@ import java.util.List;
 public interface RecipePointDAO {
 
     public RecipePoint findByRecipeId(int recipeId);
+
+    public void update(RecipePoint theRecipePoint);
 }

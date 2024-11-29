@@ -243,6 +243,11 @@ public class RecipeServiceImpl implements RecipeService{
         // 既存のレシピポイントデータ取得
         RecipePoint existingRecipePoint = recipePointDAO.findByRecipeId(id);
 
+        // 新しいレシピポイントデータをセット
+        existingRecipePoint.setPoint(updateRecipeRequest.getPoint());
+
+        // レシピポイントの更新
+
         // RecipePointインスタンスを生成し、RecipeのrecipePointフィールドにセット
         RecipePoint recipePoint = new RecipePoint();
         recipePoint.setPoint(updateRecipeRequest.getPoint());
