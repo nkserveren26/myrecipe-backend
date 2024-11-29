@@ -4,7 +4,9 @@ import com.myrecipes.backend.entity.RecipePoint;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class RecipePointDAOImpl implements RecipePointDAO {
 
     private EntityManager entityManager;

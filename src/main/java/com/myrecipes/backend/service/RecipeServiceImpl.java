@@ -3,6 +3,7 @@ package com.myrecipes.backend.service;
 import com.myrecipes.backend.dao.CategoryDAO;
 import com.myrecipes.backend.dao.RecipeDAO;
 import com.myrecipes.backend.dao.RecipeIngredientDAO;
+import com.myrecipes.backend.dao.RecipePointDAO;
 import com.myrecipes.backend.dto.*;
 import com.myrecipes.backend.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,16 +40,18 @@ public class RecipeServiceImpl implements RecipeService{
     private RecipeDAO recipeDAO;
     private CategoryDAO categoryDAO;
     private RecipeIngredientDAO recipeIngredientDAO;
+    private RecipePointDAO recipePointDAO;
 
     private final S3Client s3Client;
     private final S3Presigner presigner;
     private final String bucketName = "testbucket-kn";
 
     @Autowired
-    public RecipeServiceImpl(RecipeDAO theRecipeDAO, CategoryDAO theCategoryDAO, RecipeIngredientDAO theRecipeIngredientDAO) {
+    public RecipeServiceImpl(RecipeDAO theRecipeDAO, CategoryDAO theCategoryDAO, RecipeIngredientDAO theRecipeIngredientDAO, RecipePointDAO theRecipePointDAO) {
         recipeDAO = theRecipeDAO;
         categoryDAO = theCategoryDAO;
         recipeIngredientDAO = theRecipeIngredientDAO;
+        recipePointDAO = theRecipePointDAO;
 
         // S3クライアントの設定
         Region region = Region.AP_NORTHEAST_1;  // 適切なリージョンに変更
@@ -236,6 +239,9 @@ public class RecipeServiceImpl implements RecipeService{
         }
 
         updateRecipe.setSteps(updateRecipeRequest.getSteps());
+
+        // 既存のレシピポイントデータ取得
+        RecipePoint existingRecipePoint = recipePointDAO.findByRecipeId(id);
 
         // RecipePointインスタンスを生成し、RecipeのrecipePointフィールドにセット
         RecipePoint recipePoint = new RecipePoint();
