@@ -249,11 +249,6 @@ public class RecipeServiceImpl implements RecipeService{
         // レシピポイントの更新
         recipePointDAO.update(existingRecipePoint);
 
-        // RecipePointインスタンスを生成し、RecipeのrecipePointフィールドにセット
-        RecipePoint recipePoint = new RecipePoint();
-        recipePoint.setPoint(updateRecipeRequest.getPoint());
-        updateRecipe.setRecipePoint(recipePoint);
-
         // categoryフィールドにCategoryインスタンスをセット
         Category category = findCategoryByName(updateRecipeRequest.getCategory());
         updateRecipe.setCategory(category);
