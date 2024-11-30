@@ -274,11 +274,6 @@ public class RecipeServiceImpl implements RecipeService{
             }
         }
 
-        // レシピにセットされた、レシピのコツのrecipeフィールドに対象レシピを設定
-        if (updateRecipe.getRecipePoint() != null) {
-            updateRecipe.getRecipePoint().setRecipe(updateRecipe);
-        }
-
         recipeDAO.update(updateRecipe);
 
     }
