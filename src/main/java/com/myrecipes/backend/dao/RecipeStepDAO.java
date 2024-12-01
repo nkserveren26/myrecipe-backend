@@ -2,9 +2,11 @@ package com.myrecipes.backend.dao;
 
 import com.myrecipes.backend.entity.RecipeStep;
 
+import java.util.List;
+
 public interface RecipeStepDAO {
 
-    public RecipeStep findByRecipeId(int recipeId);
+    public List<RecipeStep> findByRecipeId(int recipeId);
 
     public void save(RecipeStep theRecipeStep);
 
