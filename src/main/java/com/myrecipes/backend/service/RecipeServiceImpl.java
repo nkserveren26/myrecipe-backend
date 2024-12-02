@@ -245,6 +245,26 @@ public class RecipeServiceImpl implements RecipeService{
         List<RecipeStep> newRecipeSteps = updateRecipeRequest.getSteps();
 
         // レシピステップデータの更新および追加
+        for (RecipeStep newRecipeStep : newRecipeSteps) {
+            Optional<RecipeStep> existingRecipeStep = existingRecipeSteps.stream()
+                    .filter(i -> i.getId() == newRecipeStep.getId()) // IDで一致を確認
+                    .findFirst();
+
+            if (existingRecipeStep.isPresent()) {
+                // 既存データの更新
+                RecipeStep step = existingRecipeStep.get();
+                step.setStepNumber(newRecipeStep.getStepNumber());
+                step.setDescription(newRecipeStep.getDescription());
+                recipeStepDAO.update(step);
+            } else {
+                // 新規データの追加
+                RecipeIngredient newEntity = new RecipeIngredient();
+                newEntity.setName(newIngredient.getName());
+                newEntity.setAmount(newIngredient.getAmount());
+                newEntity.setRecipe(updateRecipe);
+                recipeIngredientDAO.save(newEntity);
+            }
+        }
 
         updateRecipe.setSteps(updateRecipeRequest.getSteps());
 
