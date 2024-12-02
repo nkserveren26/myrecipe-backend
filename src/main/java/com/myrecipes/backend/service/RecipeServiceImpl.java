@@ -1,9 +1,6 @@
 package com.myrecipes.backend.service;
 
-import com.myrecipes.backend.dao.CategoryDAO;
-import com.myrecipes.backend.dao.RecipeDAO;
-import com.myrecipes.backend.dao.RecipeIngredientDAO;
-import com.myrecipes.backend.dao.RecipePointDAO;
+import com.myrecipes.backend.dao.*;
 import com.myrecipes.backend.dto.*;
 import com.myrecipes.backend.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +37,7 @@ public class RecipeServiceImpl implements RecipeService{
     private RecipeDAO recipeDAO;
     private CategoryDAO categoryDAO;
     private RecipeIngredientDAO recipeIngredientDAO;
+    private RecipeStepDAO recipeStepDAO;
     private RecipePointDAO recipePointDAO;
 
     private final S3Client s3Client;
@@ -47,10 +45,12 @@ public class RecipeServiceImpl implements RecipeService{
     private final String bucketName = "testbucket-kn";
 
     @Autowired
-    public RecipeServiceImpl(RecipeDAO theRecipeDAO, CategoryDAO theCategoryDAO, RecipeIngredientDAO theRecipeIngredientDAO, RecipePointDAO theRecipePointDAO) {
+    public RecipeServiceImpl(RecipeDAO theRecipeDAO, CategoryDAO theCategoryDAO,
+                             RecipeIngredientDAO theRecipeIngredientDAO, RecipeStepDAO theRecipeStepDAO, RecipePointDAO theRecipePointDAO) {
         recipeDAO = theRecipeDAO;
         categoryDAO = theCategoryDAO;
         recipeIngredientDAO = theRecipeIngredientDAO;
+        recipeStepDAO = theRecipeStepDAO;
         recipePointDAO = theRecipePointDAO;
 
         // S3クライアントの設定
@@ -237,6 +237,14 @@ public class RecipeServiceImpl implements RecipeService{
                 recipeIngredientDAO.save(newEntity);
             }
         }
+
+        // 既存のレシピステップデータを取得
+        List<RecipeStep> existingRecipeSteps = recipeStepDAO.findByRecipeId(id);
+
+        // 新しいレシピステップデータ
+        List<RecipeStep> newRecipeSteps = updateRecipeRequest.getSteps();
+
+        // レシピステップデータの更新および追加
 
         updateRecipe.setSteps(updateRecipeRequest.getSteps());
 
