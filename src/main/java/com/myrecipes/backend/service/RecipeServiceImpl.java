@@ -258,15 +258,13 @@ public class RecipeServiceImpl implements RecipeService{
                 recipeStepDAO.update(step);
             } else {
                 // 新規データの追加
-                RecipeIngredient newEntity = new RecipeIngredient();
-                newEntity.setName(newIngredient.getName());
-                newEntity.setAmount(newIngredient.getAmount());
+                RecipeStep newEntity = new RecipeStep();
+                newEntity.setStepNumber(newRecipeStep.getStepNumber());
+                newEntity.setDescription(newRecipeStep.getDescription());
                 newEntity.setRecipe(updateRecipe);
-                recipeIngredientDAO.save(newEntity);
+                recipeStepDAO.save(newEntity);
             }
         }
-
-        updateRecipe.setSteps(updateRecipeRequest.getSteps());
 
         // 既存のレシピポイントデータ取得
         RecipePoint existingRecipePoint = recipePointDAO.findByRecipeId(id);
