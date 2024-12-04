@@ -21,7 +21,7 @@ public class RecipeStepDAOImpl implements RecipeStepDAO {
 
     @Override
     public List<RecipeStep> findByRecipeId(int recipeId) {
-        String jpql = "SELECT rs FROM RecipeStep ri WHERE rs.recipe.id = :recipeId";
+        String jpql = "SELECT rs FROM RecipeStep rs WHERE rs.recipe.id = :recipeId";
         TypedQuery<RecipeStep> query = entityManager.createQuery(jpql, RecipeStep.class);
         query.setParameter("recipeId", recipeId);
         return query.getResultList();
