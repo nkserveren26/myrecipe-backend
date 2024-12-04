@@ -24,10 +24,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -119,6 +116,7 @@ public class RecipeServiceImpl implements RecipeService{
 
         // RecipeStepをDTOに変換
         List<RecipeStepDTO> steps = recipe.getSteps().stream()
+                .sorted(Comparator.comparingInt(RecipeStep::getStepNumber)) // step_numberでソート
                 .map(step -> new RecipeStepDTO(step.getId(), step.getStepNumber(), step.getDescription()))
                 .collect(Collectors.toList());
 
