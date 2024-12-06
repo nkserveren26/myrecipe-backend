@@ -47,7 +47,7 @@ public class RecipeRestController {
 
     @DeleteMapping("/{id}")
     public void deleteRecipe(@PathVariable int id) {
-
+        recipeService.deleteRecipe(id);
     }
 
 }

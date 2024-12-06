@@ -299,6 +299,13 @@ public class RecipeServiceImpl implements RecipeService{
         recipeDAO.update(updateRecipe);
     }
 
+    @Override
+    public void deleteRecipe(int id) {
+        // レシピ削除のビジネスロジックをここで実装する
+
+    }
+
+
     private String uploadImageToS3(MultipartFile imageFile) {
         try {
             // ユニークなオブジェクトキー名を生成
