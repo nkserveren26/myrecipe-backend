@@ -45,4 +45,9 @@ public class RecipeRestController {
         System.out.println("Completed updating recipe.");
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteRecipe(@PathVariable int id) {
+
+    }
+
 }

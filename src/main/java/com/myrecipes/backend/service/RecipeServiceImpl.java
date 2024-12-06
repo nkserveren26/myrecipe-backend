@@ -289,8 +289,6 @@ public class RecipeServiceImpl implements RecipeService{
             updateRecipe.setImage(presignedUrl);
         }
 
-
-
         // レシピにセットされた各ステップのrecipeフィールドに対象レシピを設定
         if (updateRecipe.getSteps() != null) {
             for (RecipeStep step : updateRecipe.getSteps()) {
@@ -299,7 +297,6 @@ public class RecipeServiceImpl implements RecipeService{
         }
 
         recipeDAO.update(updateRecipe);
-
     }
 
     private String uploadImageToS3(MultipartFile imageFile) {
