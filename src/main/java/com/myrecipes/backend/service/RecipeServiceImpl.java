@@ -138,6 +138,7 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
+    @Transactional
     public void addRecipe(AddRecipeRequest addRecipeRequest, MultipartFile thumbnail) {
 
         // Recipeインスタンス生成

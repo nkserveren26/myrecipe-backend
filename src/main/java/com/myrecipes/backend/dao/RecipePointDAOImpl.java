@@ -5,7 +5,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class RecipePointDAOImpl implements RecipePointDAO {
@@ -28,7 +27,6 @@ public class RecipePointDAOImpl implements RecipePointDAO {
     }
 
     @Override
-    @Transactional
     public void update(RecipePoint theRecipePoint) {
         entityManager.merge(theRecipePoint);
     }

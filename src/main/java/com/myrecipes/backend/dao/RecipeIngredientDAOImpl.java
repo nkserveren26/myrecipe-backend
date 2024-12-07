@@ -5,7 +5,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,14 +26,12 @@ public class RecipeIngredientDAOImpl implements RecipeIngredientDAO {
     }
 
     @Override
-    @Transactional
     public void save(RecipeIngredient theRecipeIngredient) {
         entityManager.persist(theRecipeIngredient);
     }
 
 
     @Override
-    @Transactional
     public void update(RecipeIngredient theRecipeIngredient) {
         entityManager.merge(theRecipeIngredient);
     }
