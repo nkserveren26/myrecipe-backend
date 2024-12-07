@@ -21,8 +21,8 @@ public interface RecipeService {
 
     public void addRecipe(AddRecipeRequest addRecipeRequest, MultipartFile thumbnail);
 
-    public void updateRecipe(int id, UpdateRecipeRequest updateRecipeRequest, MultipartFile thumbnail);
+    public void updateRecipeById(int id, UpdateRecipeRequest updateRecipeRequest, MultipartFile thumbnail);
 
-    public void deleteRecipe(int id);
+    public void deleteRecipeById(int id);
 
 }

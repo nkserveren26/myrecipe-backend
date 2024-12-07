@@ -203,7 +203,7 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Override
     @Transactional
-    public void updateRecipe(int id, UpdateRecipeRequest updateRecipeRequest, MultipartFile thumbnail) {
+    public void updateRecipeById(int id, UpdateRecipeRequest updateRecipeRequest, MultipartFile thumbnail) {
 
         Recipe updateRecipe = recipeDAO.findById(id);
 
@@ -305,7 +305,7 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Override
     @Transactional
-    public void deleteRecipe(int id) {
+    public void deleteRecipeById(int id) {
         // レシピ削除のビジネスロジックをここで実装する
 
         // 削除対象のレシピを取得

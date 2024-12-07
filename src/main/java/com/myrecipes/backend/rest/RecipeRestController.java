@@ -41,13 +41,13 @@ public class RecipeRestController {
     public void updateRecipe(@PathVariable int id, @RequestPart("recipe") UpdateRecipeRequest updateRecipeRequest, @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail) {
 
         // レシピを更新
-        recipeService.updateRecipe(id, updateRecipeRequest, thumbnail);
+        recipeService.updateRecipeById(id, updateRecipeRequest, thumbnail);
         System.out.println("Completed updating recipe.");
     }
 
     @DeleteMapping("/{id}")
     public void deleteRecipe(@PathVariable int id) {
-        recipeService.deleteRecipe(id);
+        recipeService.deleteRecipeById(id);
     }
 
 }
