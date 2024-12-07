@@ -3,8 +3,10 @@ package com.myrecipes.backend.service;
 import com.myrecipes.backend.dao.*;
 import com.myrecipes.backend.dto.*;
 import com.myrecipes.backend.entity.*;
+import com.myrecipes.backend.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -199,6 +201,7 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
+    @Transactional
     public void updateRecipe(int id, UpdateRecipeRequest updateRecipeRequest, MultipartFile thumbnail) {
 
         Recipe updateRecipe = recipeDAO.findById(id);
@@ -300,8 +303,19 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
+    @Transactional
     public void deleteRecipe(int id) {
         // レシピ削除のビジネスロジックをここで実装する
+
+        // 削除対象のレシピを取得
+        Recipe recipe = recipeDAO.findById(id);
+
+        // レシピが存在しない場合は例外をスロー
+        if (recipe == null) {
+            throw new ResourceNotFoundException("Recipe not found with id: " + id);
+        }
+
+        // レシピの削除を実行
 
     }
 

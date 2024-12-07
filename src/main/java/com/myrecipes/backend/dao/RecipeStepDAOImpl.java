@@ -28,13 +28,11 @@ public class RecipeStepDAOImpl implements RecipeStepDAO {
     }
 
     @Override
-    @Transactional
     public void save(RecipeStep theRecipeStep) {
         entityManager.persist(theRecipeStep);
     }
 
     @Override
-    @Transactional
     public void update(RecipeStep theRecipeStep) {
         entityManager.merge(theRecipeStep);
     }
