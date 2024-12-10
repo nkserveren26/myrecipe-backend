@@ -317,7 +317,7 @@ public class RecipeServiceImpl implements RecipeService{
         }
 
         // レシピの削除を実行
-
+        recipeDAO.deleteById(recipe);
     }
 
 
