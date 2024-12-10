@@ -11,11 +11,11 @@ public interface RecipeDAO {
 
     public Recipe findById(int theId);
 
-    public void save(Recipe theEmployee);
+    public void save(Recipe theRecipe);
 
     public void update(Recipe theRecipe);
 
-    public void deleteById(int theId);
+    public void deleteById(Recipe theRecipe);
 
     public List<RecipeResponse> findByCategoryName(String categoryName);
 }

@@ -57,7 +57,7 @@ public class RecipeDAOImpl implements RecipeDAO {
     }
 
     @Override
-    public void deleteById(int theId) {
-
+    public void deleteById(Recipe theRecipe) {
+        entityManager.remove(theRecipe);
     }
 }
