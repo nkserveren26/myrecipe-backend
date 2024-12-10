@@ -1,4 +1,4 @@
-package com.myrecipes.backend.exceptions;
+package com.myrecipes.backend.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

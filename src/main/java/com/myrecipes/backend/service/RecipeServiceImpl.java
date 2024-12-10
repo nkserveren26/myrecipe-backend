@@ -3,7 +3,7 @@ package com.myrecipes.backend.service;
 import com.myrecipes.backend.dao.*;
 import com.myrecipes.backend.dto.*;
 import com.myrecipes.backend.entity.*;
-import com.myrecipes.backend.exceptions.ResourceNotFoundException;
+import com.myrecipes.backend.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,6 @@ import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
-import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
 
 
 import java.io.ByteArrayInputStream;
