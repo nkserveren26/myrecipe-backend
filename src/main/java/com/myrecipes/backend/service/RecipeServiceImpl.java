@@ -70,6 +70,7 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
+    @Transactional
     public List<RecipeResponse> findRecipeByCategoryName(String categoryName) {
         List<RecipeResponse> recipes = recipeDAO.findByCategoryName(categoryName);
 
