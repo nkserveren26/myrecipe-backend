@@ -61,11 +61,15 @@ public class RecipeDAOImpl implements RecipeDAO {
     public void deleteById(int recipeId) {
         Recipe theRecipe = entityManager.find(Recipe.class, recipeId);
 
-        // レシピが存在しない場合は例外をスロー
-        if (theRecipe == null) {
-            throw new ResourceNotFoundException("Recipe not found with id: " + recipeId);
-        }
+        if (theRecipe != null) {
+            // 子エンティティをロード
+            theRecipe.getSteps().size(); // steps を明示的にフェッチ
+            theRecipe.getIngredients().size(); // ingredients を明示的にフェッチ
+            theRecipe.getRecipePoint();
 
-        entityManager.remove(theRecipe);
+            entityManager.remove(theRecipe); // 親エンティティを削除
+        } else {
+            throw new ResourceNotFoundException("Recipe not found with ID: " + recipeId);
+        }
     }
 }
