@@ -2,6 +2,7 @@ package com.myrecipes.backend.dao;
 
 import com.myrecipes.backend.dto.RecipeResponse;
 import com.myrecipes.backend.entity.Recipe;
+import com.myrecipes.backend.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,14 @@ public class RecipeDAOImpl implements RecipeDAO {
     }
 
     @Override
-    public void deleteById(Recipe theRecipe) {
+    public void deleteById(int recipeId) {
+        Recipe theRecipe = entityManager.find(Recipe.class, recipeId);
+
+        // レシピが存在しない場合は例外をスロー
+        if (theRecipe == null) {
+            throw new ResourceNotFoundException("Recipe not found with id: " + recipeId);
+        }
+
         entityManager.remove(theRecipe);
     }
 }

@@ -306,18 +306,9 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     @Transactional
     public void deleteRecipeById(int id) {
-        // レシピ削除のビジネスロジックをここで実装する
-
-        // 削除対象のレシピを取得
-        Recipe recipe = recipeDAO.findById(id);
-
-        // レシピが存在しない場合は例外をスロー
-        if (recipe == null) {
-            throw new ResourceNotFoundException("Recipe not found with id: " + id);
-        }
-
         // レシピの削除を実行
-        recipeDAO.deleteById(recipe);
+        System.out.println("Delete recipe");
+        recipeDAO.deleteById(id);
     }
 
 

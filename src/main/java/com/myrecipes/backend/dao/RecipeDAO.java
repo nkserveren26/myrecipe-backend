@@ -15,7 +15,7 @@ public interface RecipeDAO {
 
     public void update(Recipe theRecipe);
 
-    public void deleteById(Recipe theRecipe);
+    public void deleteById(int recipeId);
 
     public List<RecipeResponse> findByCategoryName(String categoryName);
 }
