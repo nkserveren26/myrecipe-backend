@@ -16,7 +16,7 @@ public class RecipePoint {
 
     // Recipeとの1対1のリレーションを定義
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recipe_id", nullable = false)
+    @JoinColumn(name = "recipe_id", nullable = true)
     private Recipe recipe;
 
     public String getPoint() {
