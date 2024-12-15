@@ -2,6 +2,8 @@ package com.myrecipes.backend.dao;
 
 import com.myrecipes.backend.dto.RecipeResponse;
 import com.myrecipes.backend.entity.Recipe;
+import com.myrecipes.backend.entity.RecipeIngredient;
+import com.myrecipes.backend.entity.RecipeStep;
 import com.myrecipes.backend.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -63,12 +65,17 @@ public class RecipeDAOImpl implements RecipeDAO {
         Recipe theRecipe = entityManager.find(Recipe.class, recipeId);
 
         if (theRecipe != null) {
-            System.out.println("get associated datas.");
-            // 子エンティティをロード
-            theRecipe.getSteps().size(); // steps を明示的にフェッチ
-            theRecipe.getIngredients().size(); // ingredients を明示的にフェッチ
-            theRecipe.getRecipePoint();
-
+            System.out.println("子エンティティの親参照を解除");
+            // 子エンティティの親参照を解除
+            for (RecipeIngredient ingredient : theRecipe.getIngredients()) {
+                ingredient.setRecipe(null);
+            }
+            for (RecipeStep step : theRecipe.getSteps()) {
+                step.setRecipe(null);
+            }
+            if (theRecipe.getRecipePoint() != null) {
+                theRecipe.getRecipePoint().setRecipe(null);
+            }
             System.out.println("Deleting recipe.");
             entityManager.remove(theRecipe); // 親エンティティを削除
             entityManager.flush();
