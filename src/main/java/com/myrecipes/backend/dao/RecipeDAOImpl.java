@@ -76,6 +76,14 @@ public class RecipeDAOImpl implements RecipeDAO {
             if (theRecipe.getRecipePoint() != null) {
                 theRecipe.getRecipePoint().setRecipe(null);
             }
+
+            System.out.println("親から子の参照を解除");
+            theRecipe.getIngredients().clear();
+            theRecipe.setIngredients(null);
+            theRecipe.getSteps().clear();
+            theRecipe.setSteps(null);
+            theRecipe.setRecipePoint(null);
+
             System.out.println("Deleting recipe.");
             entityManager.remove(theRecipe); // 親エンティティを削除
             entityManager.flush();
