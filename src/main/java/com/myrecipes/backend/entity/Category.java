@@ -27,6 +27,14 @@ public class Category {
         this.name = name;
     }
 
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
     @Override
     public String toString() {
         return "Category{" +
