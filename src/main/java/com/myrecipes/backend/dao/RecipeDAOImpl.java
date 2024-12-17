@@ -82,6 +82,12 @@ public class RecipeDAOImpl implements RecipeDAO {
             theRecipe.getSteps().clear();
             theRecipe.setRecipePoint(null);
 
+            System.out.println("Category 参照を解除");
+            if (theRecipe.getCategory() != null) {
+                theRecipe.getCategory().getRecipes().remove(theRecipe);
+                theRecipe.setCategory(null);
+            }
+
             System.out.println("Deleting recipe.");
             entityManager.remove(theRecipe); // 親エンティティを削除
             entityManager.flush();
