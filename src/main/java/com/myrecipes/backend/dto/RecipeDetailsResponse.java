@@ -8,16 +8,18 @@ import java.util.List;
 public class RecipeDetailsResponse {
     private int id; // レシピのID
     private String title; // レシピのタイトル
+    private int servings; // 何人前
     private String videoUrl; // レシピ動画のURL
     private List<RecipeIngredientDTO> ingredients; // 材料のリスト
     private List<RecipeStepDTO> steps; // ステップのリスト
     private String point; // レシピのコツ・ポイント
 
     public RecipeDetailsResponse(
-            int id, String title, String videoUrl,
+            int id, String title, int servings, String videoUrl,
             List<RecipeIngredientDTO> ingredients, List<RecipeStepDTO> steps, String point) {
         this.id = id;
         this.title = title;
+        this.servings = servings;
         this.videoUrl = videoUrl;
         this.ingredients = ingredients;
         this.steps = steps;
@@ -38,6 +40,14 @@ public class RecipeDetailsResponse {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getServings() {
+        return servings;
+    }
+
+    public void setServings(int servings) {
+        this.servings = servings;
     }
 
     public String getVideoUrl() {
