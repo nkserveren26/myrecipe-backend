@@ -128,7 +128,7 @@ public class RecipeServiceImpl implements RecipeService{
         System.out.println("Return Recipe Details");
 
         return new RecipeDetailsResponse(
-                id, recipe.getTitle(), recipe.getVideoUrl(), ingredients, steps, point
+                id, recipe.getTitle(), recipe.getServings(), recipe.getVideoUrl(), ingredients, steps, point
         );
     }
 
