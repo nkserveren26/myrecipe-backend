@@ -29,6 +29,7 @@ public class CategoryDAOImpl implements CategoryDAO {
         try {
             category = query.getSingleResult();
         } catch (Exception e) {
+            System.out.println(e);
             throw new RuntimeException("Category not found: " + categoryName);
         }
 
