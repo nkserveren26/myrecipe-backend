@@ -86,18 +86,14 @@ public class RecipeServiceImpl implements RecipeService{
                 // 更新対象レシピのカテゴリーインスタンスを取得
                 Category category = categoryDAO.findCategoryByName(categoryName);
 
-                // テーブル更新用データ作成
-                Recipe updateRecipe = new Recipe();
-                updateRecipe.setId(recipe.getId());
-                updateRecipe.setTitle(recipe.getTitle());
-                updateRecipe.setServings(recipe.getServings());
-                updateRecipe.setVideoUrl(recipe.getVideoUrl());
-                updateRecipe.setImage(newSignedUrl);
-                updateRecipe.setCreatedAt(recipe.getCreatedAt());
-                updateRecipe.setCategory(category);
+                // 更新対象レシピの既存データ取得
+                Recipe existingRecipe = recipeDAO.findById(recipe.getId());
+
+                // 更新後の画像URLをセット
+                existingRecipe.setImage(newSignedUrl);
 
                 // レシピテーブルを更新
-                recipeDAO.update(updateRecipe);
+                recipeDAO.update(existingRecipe);
             }
         });
 
