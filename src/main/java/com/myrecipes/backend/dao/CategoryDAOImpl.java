@@ -2,7 +2,9 @@ package com.myrecipes.backend.dao;
 
 import com.myrecipes.backend.entity.Category;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -28,9 +30,10 @@ public class CategoryDAOImpl implements CategoryDAO {
         Category category;
         try {
             category = query.getSingleResult();
-        } catch (Exception e) {
-            System.out.println(e);
-            throw new RuntimeException("Category not found: " + categoryName);
+        } catch (NoResultException e) {
+            throw new RuntimeException("Category not found: " + categoryName, e);
+        } catch (HibernateException e) {
+            throw new RuntimeException("Hibernate exception occurred while fetching category: " + categoryName, e);
         }
 
         return category;
