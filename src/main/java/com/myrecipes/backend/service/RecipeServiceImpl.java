@@ -303,7 +303,6 @@ public class RecipeServiceImpl implements RecipeService{
     @Transactional
     public void deleteRecipeById(int id) {
         // レシピの削除を実行
-        System.out.println("Delete recipe");
         recipeDAO.deleteById(id);
     }
 
@@ -364,14 +363,10 @@ public class RecipeServiceImpl implements RecipeService{
                     .map(param -> param.split("="))
                     .collect(Collectors.toMap(p -> p[0], p -> p[1]));
 
-            System.out.println(queryParams);
-
             // X-Amz-ExpiresとX-Amz-Dateパラメータが存在するか確認
             if (!queryParams.containsKey("X-Amz-Expires") || !queryParams.containsKey("X-Amz-Date")) {
                 return true;  // パラメータがない場合は期限切れと判断
             }
-
-            System.out.println("Getting Parameters");
 
             // X-Amz-ExpiresとX-Amz-Dateパラメータの値を取得
             String expiresStr = queryParams.get("X-Amz-Expires");
@@ -380,8 +375,6 @@ public class RecipeServiceImpl implements RecipeService{
             if (expiresStr == null || amzDate == null) {
                 return true;  // パラメータの値がない場合は期限切れと判断
             }
-
-            System.out.println("Converting expire value");
 
             long expiresInSeconds = Long.parseLong(expiresStr);  // 文字列をlongに変換
 
@@ -392,8 +385,6 @@ public class RecipeServiceImpl implements RecipeService{
 
             // Instant に変換
             Instant requestTime = Instant.parse(formattedAmzDate);
-
-            System.out.println("Comparing Datetime");
 
             // 有効期限を計算 (リクエスト時刻 + X-Amz-Expires 秒)
             Instant expirationTime = requestTime.plus(Duration.ofSeconds(expiresInSeconds));
