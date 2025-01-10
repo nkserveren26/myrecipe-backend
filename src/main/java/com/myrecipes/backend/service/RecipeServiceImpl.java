@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
@@ -55,12 +56,12 @@ public class RecipeServiceImpl implements RecipeService{
         Region region = Region.AP_NORTHEAST_1;  // 適切なリージョンに変更
         this.s3Client = S3Client.builder()
                 .region(region)
-                .credentialsProvider(ProfileCredentialsProvider.create())
+                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 .build();
 
         this.presigner = S3Presigner.builder()
                 .region(region)
-                .credentialsProvider(ProfileCredentialsProvider.create())
+                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 .build();
     }
 
