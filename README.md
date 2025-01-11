@@ -35,6 +35,27 @@
 
 ---
 
+## フォルダ構成 (Project Structure)
+```plaintext
+src/
+├── main/
+│   ├── java/
+│   │   └── com.myrecipes.backend/
+│   │       ├── config/        # Configurationクラスを配置
+│   │       ├── dao/           # DAOクラスを配置
+│   │       ├── dto/           # DTOクラスを配置
+│   │       ├── exception/     # 例外処理を定義したクラスを配置
+│   │       ├── rest/          # Controllerクラスを配置
+│   │       ├── service/       # ビジネスロジックを定義したServiceクラスを配置
+│   └── resources/
+│       ├── application.properties  # 設定ファイル
+│       └── static/                 # 静的リソース
+└── test/
+    └── java/                       # テストコード
+```
+
+---
+
 # デプロイメモ
 アプリのビルド  
 　mvn clean package -DskipTests
