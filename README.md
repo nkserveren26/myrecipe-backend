@@ -26,7 +26,7 @@
 | HTTPメソッド | エンドポイント        | 説明                |
 |----------|----------------|-------------------|
 | GET      | /api/recipes/by-category | 特定カテゴリのレシピのリストを取得 |
-| GET      | /api/recipes/{id}  | レシピの詳細情報を取得       |
+| GET      | /api/recipes/{id}  | レシピを取得       |
 | POST     | /api/recipes       | レシピの登録            |
 | PUT      | /api/recipes/{id}  | レシピの更新            |
 | DELETE   | /api/recipes/{id}  | レシピの削除            |
