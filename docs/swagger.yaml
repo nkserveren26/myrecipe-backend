@@ -1,7 +1,8 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: タイトル
+  title: レシピ管理アプリケーションのバックエンドAPI
+
 paths:
   '/api/recipes/{id}':
     get:
@@ -15,12 +16,36 @@ paths:
       responses:
         '200':
           description: 成功
-          schema:
-            type: object
-            properties:
-              id:
-                type: integer
-              title:
-                type: string
-              servings:
-                type: integer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: レシピのID
+                  title:
+                    type: string
+                    description: レシピ名
+                  servings:
+                    type: string
+                    description: このレシピが何人分の料理かを示します。例えば、2と記載されている場合は、2人分の分量を表します。
+                  ingredients:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Ingredients'
+
+components:
+  schemas:
+    Ingredients:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 材料のID
+        name:
+          type: string
+          description: 材料名
+        amount:
+          type: string
+          description: 材料の量
