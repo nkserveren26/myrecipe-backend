@@ -12,6 +12,7 @@ paths:
     get:
       tags:
         - Recipes
+      summary: "レシピ情報API"
       description: 特定のレシピの詳細情報を取得する。
       parameters:
         - name: id
