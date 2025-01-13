@@ -42,6 +42,10 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Ingredients'
+                  steps:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Steps'
 
 components:
   schemas:
@@ -57,3 +61,15 @@ components:
         amount:
           type: string
           description: 材料の量
+    Steps:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 各工程のID
+        stepNumber:
+          type: integer
+          description: 工程の順番（数値）
+        description:
+          type: string
+          description: 具体的な作業内容や手順の説明
