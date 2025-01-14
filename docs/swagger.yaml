@@ -41,14 +41,14 @@ paths:
                     type: integer
                     description: このレシピが何人分の料理かを示します。例えば、2と記載されている場合は、2人分の分量を表します。
                     example: 3
-                  ingredients:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Ingredients'
                   videoUrl:
                     type: string
                     description: レシピ動画のURL
                     example: "https://www.youtube.com/watch?v=XXXXXXXXXX"
+                  ingredients:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Ingredients'
                   steps:
                     type: array
                     items:
