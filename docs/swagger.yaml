@@ -45,6 +45,10 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Ingredients'
+                  videoUrl:
+                    type: string
+                    description: レシピ動画のURL
+                    example: "https://www.youtube.com/watch?v=XXXXXXXXXX"
                   steps:
                     type: array
                     items:
