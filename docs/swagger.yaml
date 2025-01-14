@@ -46,6 +46,9 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Steps'
+                  point:
+                    type: string
+                    description: レシピのポイントやコツを示します。調理の際に役立つ具体的なアドバイスや工夫を記載できます。
 
 components:
   schemas:
