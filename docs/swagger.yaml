@@ -64,6 +64,44 @@ paths:
                     type: string
                     description: レシピのポイントやコツを示します。調理の際に役立つ具体的なアドバイスや工夫を記載できます。
                     example: "お肉を焼く前に常温に戻すと、よりジューシーになります！"
+  '/api/recipes/by-category':
+    get:
+      tags:
+        - Recipes
+      summary: "レシピ一覧取得API"
+      description: |
+        指定されたカテゴリのレシピ一覧を取得します。
+      parameters:
+        - name: id
+          in: path
+          description: 取得するレシピのID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: レシピのID
+                    example: 1
+                  title:
+                    type: string
+                    description: レシピ名
+                    example: "簡単！おいしいカレーライス"
+                  servings:
+                    type: integer
+                    description: このレシピが何人分の料理かを示します。例えば、2と記載されている場合は、2人分の分量を表します。
+                    example: 3
+                  videoUrl:
+                    type: string
+                    description: レシピ動画のURL
+                    example: "https://www.youtube.com/watch?v=XXXXXXXXXX"
 
 components:
   schemas:
