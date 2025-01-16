@@ -77,7 +77,7 @@ paths:
           in: query
           required: true
           description:
-            検索するカテゴリ名（例: fish、beef）
+            "検索するカテゴリ名（例: fish、beef）"
           schema:
             type: string
             example: "fish"
