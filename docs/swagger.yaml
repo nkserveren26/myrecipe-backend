@@ -68,16 +68,19 @@ paths:
     get:
       tags:
         - Recipes
-      summary: "レシピ一覧取得API"
+      summary: "特定カテゴリのレシピ一覧を取得するAPI"
       description: |
-        指定されたカテゴリのレシピ一覧を取得します。
+        指定されたカテゴリ名に基づいて、そのカテゴリに含まれるレシピの一覧を取得します。
+        このAPIは、カテゴリごとにレシピをフィルタリングして表示する画面で使用されます。
       parameters:
-        - name: id
-          in: path
-          description: 取得するレシピのID
+        - name: categoryName
+          in: query
           required: true
+          description:
+            検索するカテゴリ名（例: fish、beef）
           schema:
-            type: integer
+            type: string
+            example: "fish"
       responses:
         '200':
           description: 成功
