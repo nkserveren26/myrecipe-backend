@@ -97,6 +97,10 @@ paths:
                     type: string
                     description: レシピ名
                     example: "簡単！おいしいカレーライス"
+                  image:
+                    type: string
+                    description: レシピのサムネイル画像のURL
+                    example: "https://xxxx.xxxx.xxx/xxx/xxxxxxx"
                   servings:
                     type: integer
                     description: このレシピが何人分の料理かを示します。例えば、2と記載されている場合は、2人分の分量を表します。
@@ -105,6 +109,10 @@ paths:
                     type: string
                     description: レシピ動画のURL
                     example: "https://www.youtube.com/watch?v=XXXXXXXXXX"
+                  createdAt:
+                    type: string
+                    description: レシピの登録日
+                    example: "2024-09-13T08:22:12"
 
 components:
   schemas:
