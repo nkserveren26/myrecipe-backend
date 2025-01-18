@@ -134,64 +134,69 @@ public class RecipeServiceImpl implements RecipeService{
     @Transactional
     public void addRecipe(AddRecipeRequest addRecipeRequest, MultipartFile thumbnail) {
 
-        // Recipeインスタンス生成
-        Recipe recipe = new Recipe();
+        try {
+            // Recipeインスタンス生成
+            Recipe recipe = new Recipe();
 
-        // Recipeインスタンスの各フィールドに値をセット
-        recipe.setTitle(addRecipeRequest.getTitle());
-        recipe.setServings(addRecipeRequest.getServings());
-        recipe.setVideoUrl(addRecipeRequest.getVideoUrl());
-        recipe.setIngredients(addRecipeRequest.getIngredients());
-        recipe.setSteps(addRecipeRequest.getSteps());
+            // Recipeインスタンスの各フィールドに値をセット
+            recipe.setTitle(addRecipeRequest.getTitle());
+            recipe.setServings(addRecipeRequest.getServings());
+            recipe.setVideoUrl(addRecipeRequest.getVideoUrl());
+            recipe.setIngredients(addRecipeRequest.getIngredients());
+            recipe.setSteps(addRecipeRequest.getSteps());
 
-        // RecipePointインスタンスを生成し、RecipeのrecipePointフィールドにセット
-        RecipePoint recipePoint = new RecipePoint();
-        recipePoint.setPoint(addRecipeRequest.getPoint());
-        recipe.setRecipePoint(recipePoint);
+            // RecipePointインスタンスを生成し、RecipeのrecipePointフィールドにセット
+            RecipePoint recipePoint = new RecipePoint();
+            recipePoint.setPoint(addRecipeRequest.getPoint());
+            recipe.setRecipePoint(recipePoint);
 
-        // 日本時間の現在時刻を取得
-        ZoneId zoneId = ZoneId.of("Asia/Tokyo");
-        LocalDateTime jstNow = LocalDateTime.now(zoneId);
+            // 日本時間の現在時刻を取得
+            ZoneId zoneId = ZoneId.of("Asia/Tokyo");
+            LocalDateTime jstNow = LocalDateTime.now(zoneId);
 
-        // createdAtフィールドに日本時間の現在時刻を設定
-        recipe.setCreatedAt(jstNow);
+            // createdAtフィールドに日本時間の現在時刻を設定
+            recipe.setCreatedAt(jstNow);
 
-        // categoryフィールドにCategoryインスタンスをセット
-        Category category = findCategoryByName(addRecipeRequest.getCategory());
-        recipe.setCategory(category);
+            // categoryフィールドにCategoryインスタンスをセット
+            Category category = findCategoryByName(addRecipeRequest.getCategory());
+            recipe.setCategory(category);
 
-        // サムネイル画像が指定されている場合にのみ画像処理を実行
-        if (thumbnail != null && !thumbnail.isEmpty()) {
-            // 画像をS3にアップロード
-            String imageObjectKey = uploadImageToS3(thumbnail);
+            // サムネイル画像が指定されている場合にのみ画像処理を実行
+            if (thumbnail != null && !thumbnail.isEmpty()) {
+                // 画像をS3にアップロード
+                String imageObjectKey = uploadImageToS3(thumbnail);
 
-            // アップロードした画像の署名付きURLを生成
-            String presignedUrl = generatePresignedUrl(imageObjectKey);
+                // アップロードした画像の署名付きURLを生成
+                String presignedUrl = generatePresignedUrl(imageObjectKey);
 
-            // 署名付きURLをRecipeのimageフィールドにセット
-            recipe.setImage(presignedUrl);
-        }
-
-        // レシピにセットされた各材料のrecipeフィールドに対象レシピを設定
-        if (recipe.getIngredients() != null) {
-            for (RecipeIngredient ingredient : recipe.getIngredients()) {
-                ingredient.setRecipe(recipe);
+                // 署名付きURLをRecipeのimageフィールドにセット
+                recipe.setImage(presignedUrl);
             }
-        }
 
-        // レシピにセットされた各ステップのrecipeフィールドに対象レシピを設定
-        if (recipe.getSteps() != null) {
-            for (RecipeStep step : recipe.getSteps()) {
-                step.setRecipe(recipe);
+            // レシピにセットされた各材料のrecipeフィールドに対象レシピを設定
+            if (recipe.getIngredients() != null) {
+                for (RecipeIngredient ingredient : recipe.getIngredients()) {
+                    ingredient.setRecipe(recipe);
+                }
             }
+
+            // レシピにセットされた各ステップのrecipeフィールドに対象レシピを設定
+            if (recipe.getSteps() != null) {
+                for (RecipeStep step : recipe.getSteps()) {
+                    step.setRecipe(recipe);
+                }
+            }
+
+            // レシピにセットされた、レシピのコツのrecipeフィールドに対象レシピを設定
+            if (recipe.getRecipePoint() != null) {
+                recipe.getRecipePoint().setRecipe(recipe);
+            }
+
+            recipeDAO.save(recipe);
+        } catch (Exception e) {
+            throw new RuntimeException("レシピ登録に失敗しました。");
         }
 
-        // レシピにセットされた、レシピのコツのrecipeフィールドに対象レシピを設定
-        if (recipe.getRecipePoint() != null) {
-            recipe.getRecipePoint().setRecipe(recipe);
-        }
-
-        recipeDAO.save(recipe);
     }
 
     @Override

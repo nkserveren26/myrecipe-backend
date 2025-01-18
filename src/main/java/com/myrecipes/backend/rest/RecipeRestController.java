@@ -5,6 +5,8 @@ import com.myrecipes.backend.dto.RecipeDetailsResponse;
 import com.myrecipes.backend.dto.RecipeResponse;
 import com.myrecipes.backend.dto.UpdateRecipeRequest;
 import com.myrecipes.backend.service.RecipeService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,10 +33,14 @@ public class RecipeRestController {
     }
 
     @PostMapping
-    public void addRecipe(@RequestPart("recipe") AddRecipeRequest addRecipeRequest, @RequestPart("thumbnail") MultipartFile thumbnail) {
+    public ResponseEntity<Void> addRecipe(@RequestPart("recipe") AddRecipeRequest addRecipeRequest, @RequestPart("thumbnail") MultipartFile thumbnail) {
 
-        // レシピを新規登録
-        recipeService.addRecipe(addRecipeRequest, thumbnail);
+        try {
+            recipeService.addRecipe(addRecipeRequest, thumbnail);
+            return ResponseEntity.status(HttpStatus.CREATED).build(); // 201 Created
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 Internal Server Error
+        }
     }
 
     @PutMapping("/{id}")
