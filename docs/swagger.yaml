@@ -80,7 +80,7 @@ paths:
           in: query
           required: true
           description:
-            "検索するカテゴリ名（例: fish、beef）"
+            "検索するカテゴリ名（例: fish、meet）"
           schema:
             type: string
             example: "fish"
@@ -116,6 +116,73 @@ paths:
                     type: string
                     description: レシピの登録日
                     example: "2024-09-13T08:22:12"
+  '/api/recipes':
+    post:
+      tags:
+        - Recipes
+      summary: "レシピ登録API"
+      description: |
+        リクエストボディにレシピデータを含めて新しいレシピを登録します。
+        登録が成功した場合、レスポンスは空で、ステータスコード`201 Created`が返されます。
+      requestBody:
+        required: true
+        description: 登録するレシピのデータ
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: レシピ名
+                  example: "簡単おいしい照り焼きチキン"
+                category:
+                  type: string
+                  description: レシピのカテゴリ
+                  example: "meet"
+                servings:
+                  type: integer
+                  description: このレシピが何人分の分量か
+                  example: 4
+                ingredients:
+                  type: array
+                  description: 使用する材料一覧
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: 材料名
+                        example: "鶏むね肉"
+                      amount:
+                        type: string
+                        description: 材料の量
+                        example: "200g"
+                steps:
+                  type: array
+                  description: 調理手順のリスト
+                  items:
+                    type: object
+                    properties:
+                      stepNumber:
+                        type: integer
+                        description: 手順番号
+                        example: 1
+                      description:
+                        type: string
+                        description: 手順の内容
+                        example: "鶏むね肉を適当な大きさに切る。"
+                point:
+                  type: string
+                  description: レシピのポイントやコツ
+                  example: "鶏むね肉を下味でしっかり漬け込む。"
+                videoUrl:
+                  type: string
+                  description: レシピ動画のURL
+                  example: "https://www.youtube.com/watch?v=example"
+        responses:
+        '201':
+          description: レシピの登録に成功しました。
 
 components:
   schemas:
