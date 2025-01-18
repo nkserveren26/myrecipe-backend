@@ -180,7 +180,7 @@ paths:
                   type: string
                   description: レシピ動画のURL
                   example: "https://www.youtube.com/watch?v=example"
-        responses:
+      responses:
         '201':
           description: レシピの登録に成功しました。
 
