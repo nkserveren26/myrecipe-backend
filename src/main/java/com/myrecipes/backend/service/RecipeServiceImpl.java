@@ -73,32 +73,36 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     @Transactional
     public List<RecipeResponse> findRecipeByCategoryName(String categoryName) {
-        List<RecipeResponse> recipes = recipeDAO.findByCategoryName(categoryName);
+        try {
+            List<RecipeResponse> recipes = recipeDAO.findByCategoryName(categoryName);
 
-        // 各レシピの画像URLをチェックして、必要であれば再生成する
-        recipes.forEach(recipe -> {
-            String imageUrl = recipe.getImage();
+            // 各レシピの画像URLをチェックして、必要であれば再生成する
+            recipes.forEach(recipe -> {
+                String imageUrl = recipe.getImage();
 
-            if (isExpired(imageUrl)) {
-                // URLが期限切れの場合、新しい署名付きURLを生成
-                String imageObjectKey = extractObjectKey(imageUrl);
-                String newSignedUrl = generatePresignedUrl(imageObjectKey);
+                if (isExpired(imageUrl)) {
+                    // URLが期限切れの場合、新しい署名付きURLを生成
+                    String imageObjectKey = extractObjectKey(imageUrl);
+                    String newSignedUrl = generatePresignedUrl(imageObjectKey);
 
-                // 更新対象レシピのカテゴリーインスタンスを取得
-                Category category = categoryDAO.findCategoryByName(categoryName);
+                    // 更新対象レシピのカテゴリーインスタンスを取得
+                    Category category = categoryDAO.findCategoryByName(categoryName);
 
-                // 更新対象レシピの既存データ取得
-                Recipe existingRecipe = recipeDAO.findById(recipe.getId());
+                    // 更新対象レシピの既存データ取得
+                    Recipe existingRecipe = recipeDAO.findById(recipe.getId());
 
-                // 更新後の画像URLをセット
-                existingRecipe.setImage(newSignedUrl);
+                    // 更新後の画像URLをセット
+                    existingRecipe.setImage(newSignedUrl);
 
-                // レシピテーブルを更新
-                recipeDAO.update(existingRecipe);
-            }
-        });
+                    // レシピテーブルを更新
+                    recipeDAO.update(existingRecipe);
+                }
+            });
 
-        return recipes;
+            return recipes;
+        } catch (Exception e) {
+            throw new RuntimeException("レシピ取得に失敗しました。");
+        }
     }
 
     @Override

@@ -23,8 +23,20 @@ public class RecipeRestController {
     }
 
     @GetMapping("/by-category")
-    public List<RecipeResponse> getRecipesByCategoryName(@RequestParam String categoryName) {
-        return recipeService.findRecipeByCategoryName(categoryName);
+    public ResponseEntity<List<RecipeResponse>> getRecipesByCategoryName(@RequestParam String categoryName) {
+        try {
+            // サービス層からカテゴリに該当するレシピ一覧を取得
+            List<RecipeResponse> recipes = recipeService.findRecipeByCategoryName(categoryName);
+
+            if (recipes.isEmpty()) {
+                // レシピが空の場合、404を返却
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+
+            return ResponseEntity.ok(recipes); // レシピ一覧と200を返却
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500エラーを返却
+        }
     }
 
     @GetMapping("/{id}")
