@@ -183,6 +183,8 @@ paths:
       responses:
         '201':
           description: レシピの登録に成功しました。
+        '500':
+          description: サーバーエラーが発生しました。登録処理に失敗しました。
 
 components:
   schemas:
