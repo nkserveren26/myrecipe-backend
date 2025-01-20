@@ -56,11 +56,18 @@ public class RecipeRestController {
     }
 
     @PutMapping("/{id}")
-    public void updateRecipe(@PathVariable int id, @RequestPart("recipe") UpdateRecipeRequest updateRecipeRequest, @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail) {
+    public ResponseEntity<Void> updateRecipe(@PathVariable int id, @RequestPart("recipe") UpdateRecipeRequest updateRecipeRequest, @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail) {
 
-        // レシピを更新
-        recipeService.updateRecipeById(id, updateRecipeRequest, thumbnail);
-        System.out.println("Completed updating recipe.");
+        try {
+            // レシピを更新
+            recipeService.updateRecipeById(id, updateRecipeRequest, thumbnail);
+
+            // 成功時に200 OKを返す
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 Internal Server Error
+        }
+
     }
 
     @DeleteMapping("/{id}")

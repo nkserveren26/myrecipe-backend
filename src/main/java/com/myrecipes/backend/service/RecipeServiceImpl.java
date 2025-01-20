@@ -209,100 +209,108 @@ public class RecipeServiceImpl implements RecipeService{
 
         Recipe updateRecipe = recipeDAO.findById(id);
 
-        // Recipeインスタンスの各フィールドに値をセット
-        updateRecipe.setTitle(updateRecipeRequest.getTitle());
-        updateRecipe.setServings(updateRecipeRequest.getServings());
-        updateRecipe.setVideoUrl(updateRecipeRequest.getVideoUrl());
+        if (updateRecipe == null) {
+            throw new RuntimeException("指定されたIDのレシピが見つかりません: " + id);
+        }
 
-        // 現在の材料データを取得
-        List<RecipeIngredient> existingIngredients = recipeIngredientDAO.findByRecipeId(id);
+        try {
+            // Recipeインスタンスの各フィールドに値をセット
+            updateRecipe.setTitle(updateRecipeRequest.getTitle());
+            updateRecipe.setServings(updateRecipeRequest.getServings());
+            updateRecipe.setVideoUrl(updateRecipeRequest.getVideoUrl());
 
-        // 新しい材料データ
-        List<RecipeIngredient> newIngredients = updateRecipeRequest.getIngredients();
+            // 現在の材料データを取得
+            List<RecipeIngredient> existingIngredients = recipeIngredientDAO.findByRecipeId(id);
 
-        // 材料データの更新および追加
-        for (RecipeIngredient newIngredient : newIngredients) {
-            Optional<RecipeIngredient> existingIngredient = existingIngredients.stream()
-                    .filter(i -> i.getId() == newIngredient.getId()) // IDで一致を確認
-                    .findFirst();
+            // 新しい材料データ
+            List<RecipeIngredient> newIngredients = updateRecipeRequest.getIngredients();
 
-            if (existingIngredient.isPresent()) {
-                // 既存データの更新
-                RecipeIngredient ingredient = existingIngredient.get();
-                ingredient.setName(newIngredient.getName());
-                ingredient.setAmount(newIngredient.getAmount());
-                recipeIngredientDAO.update(ingredient);
-            } else {
-                // 新規データの追加
-                RecipeIngredient newEntity = new RecipeIngredient();
-                newEntity.setName(newIngredient.getName());
-                newEntity.setAmount(newIngredient.getAmount());
-                newEntity.setRecipe(updateRecipe);
-                recipeIngredientDAO.save(newEntity);
+            // 材料データの更新および追加
+            for (RecipeIngredient newIngredient : newIngredients) {
+                Optional<RecipeIngredient> existingIngredient = existingIngredients.stream()
+                        .filter(i -> i.getId() == newIngredient.getId()) // IDで一致を確認
+                        .findFirst();
+
+                if (existingIngredient.isPresent()) {
+                    // 既存データの更新
+                    RecipeIngredient ingredient = existingIngredient.get();
+                    ingredient.setName(newIngredient.getName());
+                    ingredient.setAmount(newIngredient.getAmount());
+                    recipeIngredientDAO.update(ingredient);
+                } else {
+                    // 新規データの追加
+                    RecipeIngredient newEntity = new RecipeIngredient();
+                    newEntity.setName(newIngredient.getName());
+                    newEntity.setAmount(newIngredient.getAmount());
+                    newEntity.setRecipe(updateRecipe);
+                    recipeIngredientDAO.save(newEntity);
+                }
             }
-        }
 
-        // 既存のレシピステップデータを取得
-        List<RecipeStep> existingRecipeSteps = recipeStepDAO.findByRecipeId(id);
+            // 既存のレシピステップデータを取得
+            List<RecipeStep> existingRecipeSteps = recipeStepDAO.findByRecipeId(id);
 
-        // 新しいレシピステップデータ
-        List<RecipeStep> newRecipeSteps = updateRecipeRequest.getSteps();
+            // 新しいレシピステップデータ
+            List<RecipeStep> newRecipeSteps = updateRecipeRequest.getSteps();
 
-        // レシピステップデータの更新および追加
-        for (RecipeStep newRecipeStep : newRecipeSteps) {
-            Optional<RecipeStep> existingRecipeStep = existingRecipeSteps.stream()
-                    .filter(i -> i.getId() == newRecipeStep.getId()) // IDで一致を確認
-                    .findFirst();
+            // レシピステップデータの更新および追加
+            for (RecipeStep newRecipeStep : newRecipeSteps) {
+                Optional<RecipeStep> existingRecipeStep = existingRecipeSteps.stream()
+                        .filter(i -> i.getId() == newRecipeStep.getId()) // IDで一致を確認
+                        .findFirst();
 
-            if (existingRecipeStep.isPresent()) {
-                // 既存データの更新
-                RecipeStep step = existingRecipeStep.get();
-                step.setStepNumber(newRecipeStep.getStepNumber());
-                step.setDescription(newRecipeStep.getDescription());
-                recipeStepDAO.update(step);
-            } else {
-                // 新規データの追加
-                RecipeStep newEntity = new RecipeStep();
-                newEntity.setStepNumber(newRecipeStep.getStepNumber());
-                newEntity.setDescription(newRecipeStep.getDescription());
-                newEntity.setRecipe(updateRecipe);
-                recipeStepDAO.save(newEntity);
+                if (existingRecipeStep.isPresent()) {
+                    // 既存データの更新
+                    RecipeStep step = existingRecipeStep.get();
+                    step.setStepNumber(newRecipeStep.getStepNumber());
+                    step.setDescription(newRecipeStep.getDescription());
+                    recipeStepDAO.update(step);
+                } else {
+                    // 新規データの追加
+                    RecipeStep newEntity = new RecipeStep();
+                    newEntity.setStepNumber(newRecipeStep.getStepNumber());
+                    newEntity.setDescription(newRecipeStep.getDescription());
+                    newEntity.setRecipe(updateRecipe);
+                    recipeStepDAO.save(newEntity);
+                }
             }
-        }
 
-        // 既存のレシピポイントデータ取得
-        RecipePoint existingRecipePoint = recipePointDAO.findByRecipeId(id);
+            // 既存のレシピポイントデータ取得
+            RecipePoint existingRecipePoint = recipePointDAO.findByRecipeId(id);
 
-        // 新しいレシピポイントデータをセット
-        existingRecipePoint.setPoint(updateRecipeRequest.getPoint());
+            // 新しいレシピポイントデータをセット
+            existingRecipePoint.setPoint(updateRecipeRequest.getPoint());
 
-        // レシピポイントの更新
-        recipePointDAO.update(existingRecipePoint);
+            // レシピポイントの更新
+            recipePointDAO.update(existingRecipePoint);
 
-        // categoryフィールドにCategoryインスタンスをセット
-        Category category = findCategoryByName(updateRecipeRequest.getCategory());
-        updateRecipe.setCategory(category);
+            // categoryフィールドにCategoryインスタンスをセット
+            Category category = findCategoryByName(updateRecipeRequest.getCategory());
+            updateRecipe.setCategory(category);
 
-        // サムネイル画像が指定されている場合にのみ画像処理を実行
-        if (thumbnail != null && !thumbnail.isEmpty()) {
-            // 画像をS3にアップロード
-            String imageObjectKey = uploadImageToS3(thumbnail);
+            // サムネイル画像が指定されている場合にのみ画像処理を実行
+            if (thumbnail != null && !thumbnail.isEmpty()) {
+                // 画像をS3にアップロード
+                String imageObjectKey = uploadImageToS3(thumbnail);
 
-            // アップロードした画像の署名付きURLを生成
-            String presignedUrl = generatePresignedUrl(imageObjectKey);
+                // アップロードした画像の署名付きURLを生成
+                String presignedUrl = generatePresignedUrl(imageObjectKey);
 
-            // 署名付きURLをRecipeのimageフィールドにセット
-            updateRecipe.setImage(presignedUrl);
-        }
-
-        // レシピにセットされた各ステップのrecipeフィールドに対象レシピを設定
-        if (updateRecipe.getSteps() != null) {
-            for (RecipeStep step : updateRecipe.getSteps()) {
-                step.setRecipe(updateRecipe);
+                // 署名付きURLをRecipeのimageフィールドにセット
+                updateRecipe.setImage(presignedUrl);
             }
-        }
 
-        recipeDAO.update(updateRecipe);
+            // レシピにセットされた各ステップのrecipeフィールドに対象レシピを設定
+            if (updateRecipe.getSteps() != null) {
+                for (RecipeStep step : updateRecipe.getSteps()) {
+                    step.setRecipe(updateRecipe);
+                }
+            }
+
+            recipeDAO.update(updateRecipe);
+        } catch (Exception e) {
+            throw new RuntimeException("レシピの更新に失敗しました: " + e.getMessage(), e);
+        }
     }
 
     @Override
