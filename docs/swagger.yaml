@@ -64,6 +64,8 @@ paths:
                     type: string
                     description: レシピのポイントやコツを示します。調理の際に役立つ具体的なアドバイスや工夫を記載できます。
                     example: "お肉を焼く前に常温に戻すと、よりジューシーになります！"
+        '500':
+          description: サーバーエラーが発生しました。取得処理に失敗しました。
   '/api/recipes/by-category':
     get:
       tags:
@@ -116,6 +118,8 @@ paths:
                     type: string
                     description: レシピの登録日
                     example: "2024-09-13T08:22:12"
+        '500':
+          description: サーバーエラーが発生しました。取得処理に失敗しました。
   '/api/recipes':
     post:
       tags:
