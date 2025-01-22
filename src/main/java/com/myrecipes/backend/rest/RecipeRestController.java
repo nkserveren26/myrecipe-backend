@@ -71,8 +71,14 @@ public class RecipeRestController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteRecipe(@PathVariable int id) {
-        recipeService.deleteRecipeById(id);
-    }
+    public ResponseEntity<Void> deleteRecipe(@PathVariable int id) {
+        try {
+            recipeService.deleteRecipeById(id);
 
+            // 成功時に200 OKを返す
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 Internal Server Error
+        }
+    }
 }

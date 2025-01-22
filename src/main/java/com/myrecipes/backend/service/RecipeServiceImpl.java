@@ -316,8 +316,12 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     @Transactional
     public void deleteRecipeById(int id) {
-        // レシピの削除を実行
-        recipeDAO.deleteById(id);
+        try {
+            // レシピの削除を実行
+            recipeDAO.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("レシピの削除に失敗しました: " + e.getMessage(), e);
+        }
     }
 
 
