@@ -134,6 +134,24 @@ paths:
           description: レシピの更新に成功しました。
         '500':
           description: サーバーエラーが発生しました。更新処理に失敗しました。
+    delete:
+      tags:
+        - Recipes
+      summary: "レシピ情報API"
+      description: |
+        指定されたレシピIDをもとに、特定のレシピを削除します。
+      parameters:
+        - name: id
+          in: path
+          description: 取得するレシピのID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: レシピの削除に成功しました。
+        '500':
+          description: サーバーエラーが発生しました。削除処理に失敗しました。
   '/api/recipes/by-category':
     get:
       tags:
