@@ -137,7 +137,7 @@ paths:
     delete:
       tags:
         - Recipes
-      summary: "レシピ情報API"
+      summary: "レシピ削除API"
       description: |
         指定されたレシピIDをもとに、特定のレシピを削除します。
       parameters:
