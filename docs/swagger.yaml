@@ -71,12 +71,12 @@ paths:
         - Recipes
       summary: "レシピ更新API"
       description: |
-        リクエストボディにレシピデータを含めてレシピを更新します。
+        リクエストボディにレシピデータを含めてレシピを更新します。  
         登録が成功した場合、レスポンスは空で、ステータスコード`200`が返されます。
       parameters:
         - name: id
           in: path
-          description: 取得するレシピのID
+          description: 更新するレシピのID
           required: true
           schema:
             type: integer
@@ -150,7 +150,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: 取得するレシピのID
+          description: 削除するレシピのID
           required: true
           schema:
             type: integer
