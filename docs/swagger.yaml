@@ -224,17 +224,8 @@ paths:
               properties:
                 recipe:
                   type: string
-                  format: binary
                   description: JSON形式のレシピデータ
-                thumbnail:
-                  type: string
-                  format: binary
-                  description: サムネイル画像（ファイルアップロード）
-            examples:
-              example-1:
-                summary: サンプルリクエスト
-                value:
-                  recipe: |
+                  example: |
                     {
                       "title": "レシピタイトル",
                       "servings": "4",
@@ -250,7 +241,10 @@ paths:
                       ],
                       "point": "調理のコツ"
                     }
-                  thumbnail: (ファイルを選択してください)
+                thumbnail:
+                  type: string
+                  format: binary
+                  description: サムネイル画像（ファイルアップロード）
       responses:
         '201':
           description: レシピの登録に成功しました。
