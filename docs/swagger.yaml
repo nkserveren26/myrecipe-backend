@@ -73,6 +73,13 @@ paths:
       description: |
         リクエストボディにレシピデータを含めてレシピを更新します。
         登録が成功した場合、レスポンスは空で、ステータスコード`200`が返されます。
+      parameters:
+        - name: id
+          in: path
+          description: 取得するレシピのID
+          required: true
+          schema:
+            type: integer
       requestBody:
         required: true
         description: 登録するレシピのデータ
@@ -225,22 +232,6 @@ paths:
                 recipe:
                   type: string
                   description: JSON形式のレシピデータ
-                  example: |
-                    {
-                      "title": "レシピタイトル",
-                      "servings": "4",
-                      "category": "fish",
-                      "videoUrl": "http://example.com/video",
-                      "ingredients": [
-                        { "name": "材料1", "amount": "100g" },
-                        { "name": "材料2", "amount": "200g" }
-                      ],
-                      "steps": [
-                        { "stepNumber": 1, "description": "手順1の説明" },
-                        { "stepNumber": 2, "description": "手順2の説明" }
-                      ],
-                      "point": "調理のコツ"
-                    }
                 thumbnail:
                   type: string
                   format: binary
