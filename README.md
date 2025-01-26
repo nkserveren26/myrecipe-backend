@@ -31,7 +31,8 @@
 | PUT      | /api/recipes/{id}  | レシピの更新            |
 | DELETE   | /api/recipes/{id}  | レシピの削除            |
 
-詳細なAPI仕様は今後作成予定。
+詳細なAPI仕様は以下に記載しています。  
+https://nkserveren26.github.io/myrecipe-backend/dist/index.html
 
 ---
 
