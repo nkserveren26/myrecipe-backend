@@ -40,8 +40,14 @@ public class RecipeRestController {
     }
 
     @GetMapping("/{id}")
-    public RecipeDetailsResponse getRecipeDetails(@PathVariable int id) {
-        return recipeService.getRecipeDetails(id);
+    public ResponseEntity<RecipeDetailsResponse> getRecipeDetails(@PathVariable int id) {
+        try {
+            RecipeDetailsResponse response =  recipeService.getRecipeDetails(id);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500エラーを返却
+        }
+
     }
 
     @PostMapping
