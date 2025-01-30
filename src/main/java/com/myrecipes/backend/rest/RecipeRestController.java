@@ -43,7 +43,8 @@ public class RecipeRestController {
     public ResponseEntity<RecipeDetailsResponse> getRecipeDetails(@PathVariable int id) {
         try {
             RecipeDetailsResponse response =  recipeService.getRecipeDetails(id);
-            return ResponseEntity.ok(response);
+            throw new RuntimeException("レシピ登録に失敗しました。");
+            //return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500エラーを返却
         }
