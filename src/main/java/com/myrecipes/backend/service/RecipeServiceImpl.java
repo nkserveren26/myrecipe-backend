@@ -107,26 +107,32 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Override
     public RecipeDetailsResponse getRecipeDetails(int id) {
-        // 指定されたidのレシピを取得
-        Recipe recipe = recipeDAO.findById(id);
 
-        // RecipeIngredientをDTOに変換
-        List<RecipeIngredientDTO> ingredients = recipe.getIngredients().stream()
-                .map(ingredient -> new RecipeIngredientDTO(ingredient.getId(), ingredient.getName(), ingredient.getAmount()))
-                .collect(Collectors.toList());
+        try {
+            // 指定されたidのレシピを取得
+            Recipe recipe = recipeDAO.findById(id);
 
-        // RecipeStepをDTOに変換
-        List<RecipeStepDTO> steps = recipe.getSteps().stream()
-                .sorted(Comparator.comparingInt(RecipeStep::getStepNumber)) // step_numberでソート
-                .map(step -> new RecipeStepDTO(step.getId(), step.getStepNumber(), step.getDescription()))
-                .collect(Collectors.toList());
+            // RecipeIngredientをDTOに変換
+            List<RecipeIngredientDTO> ingredients = recipe.getIngredients().stream()
+                    .map(ingredient -> new RecipeIngredientDTO(ingredient.getId(), ingredient.getName(), ingredient.getAmount()))
+                    .collect(Collectors.toList());
 
-        // 取得したレシピのコツ・ポイントを取得
-        String point = recipe.getRecipePoint().getPoint();
+            // RecipeStepをDTOに変換
+            List<RecipeStepDTO> steps = recipe.getSteps().stream()
+                    .sorted(Comparator.comparingInt(RecipeStep::getStepNumber)) // step_numberでソート
+                    .map(step -> new RecipeStepDTO(step.getId(), step.getStepNumber(), step.getDescription()))
+                    .collect(Collectors.toList());
 
-        return new RecipeDetailsResponse(
-                id, recipe.getTitle(), recipe.getServings(), recipe.getVideoUrl(), ingredients, steps, point
-        );
+            // 取得したレシピのコツ・ポイントを取得
+            String point = recipe.getRecipePoint().getPoint();
+
+            return new RecipeDetailsResponse(
+                    id, recipe.getTitle(), recipe.getServings(), recipe.getVideoUrl(), ingredients, steps, point
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("レシピの取得に失敗しました。");
+        }
+
     }
 
     @Override
