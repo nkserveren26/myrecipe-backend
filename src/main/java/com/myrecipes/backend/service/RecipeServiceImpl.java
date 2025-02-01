@@ -3,6 +3,7 @@ package com.myrecipes.backend.service;
 import com.myrecipes.backend.dao.*;
 import com.myrecipes.backend.dto.*;
 import com.myrecipes.backend.entity.*;
+import com.myrecipes.backend.exception.RecipeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -128,6 +129,8 @@ public class RecipeServiceImpl implements RecipeService{
             return new RecipeDetailsResponse(
                     id, recipe.getTitle(), recipe.getServings(), recipe.getVideoUrl(), ingredients, steps, point
             );
+        } catch (RecipeNotFoundException e) {
+            throw e;  // そのままスロー（コントローラーで 404 を返すため）
         } catch (Exception e) {
             throw new RuntimeException("レシピの取得に失敗しました。");
         }

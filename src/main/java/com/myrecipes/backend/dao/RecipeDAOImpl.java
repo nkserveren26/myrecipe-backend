@@ -44,7 +44,13 @@ public class RecipeDAOImpl implements RecipeDAO {
     // 特定のIDのレシピを検索
     @Override
     public Recipe findById(int theId) {
-        return entityManager.find(Recipe.class, theId);
+        Recipe recipe =  entityManager.find(Recipe.class, theId);
+
+        if (recipe == null) {
+            throw new RecipeNotFoundException("レシピが見つかりません: ID = " + theId);
+        }
+
+        return recipe;
     }
 
     // レシピを新規追加

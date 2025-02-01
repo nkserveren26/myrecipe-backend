@@ -4,6 +4,7 @@ import com.myrecipes.backend.dto.AddRecipeRequest;
 import com.myrecipes.backend.dto.RecipeDetailsResponse;
 import com.myrecipes.backend.dto.RecipeResponse;
 import com.myrecipes.backend.dto.UpdateRecipeRequest;
+import com.myrecipes.backend.exception.RecipeNotFoundException;
 import com.myrecipes.backend.service.RecipeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +45,8 @@ public class RecipeRestController {
         try {
             RecipeDetailsResponse response =  recipeService.getRecipeDetails(id);
             return ResponseEntity.ok(response);
+        } catch (RecipeNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404 Not Found
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500エラーを返却
         }
