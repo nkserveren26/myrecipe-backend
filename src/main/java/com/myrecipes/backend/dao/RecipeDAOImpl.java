@@ -4,12 +4,11 @@ import com.myrecipes.backend.dto.RecipeResponse;
 import com.myrecipes.backend.entity.Recipe;
 import com.myrecipes.backend.entity.RecipeIngredient;
 import com.myrecipes.backend.entity.RecipeStep;
-import com.myrecipes.backend.exception.ResourceNotFoundException;
+import com.myrecipes.backend.exception.RecipeNotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -88,7 +87,7 @@ public class RecipeDAOImpl implements RecipeDAO {
             entityManager.remove(theRecipe); // 親エンティティを削除
             entityManager.flush();
         } else {
-            throw new ResourceNotFoundException("Recipe not found with ID: " + recipeId);
+            throw new RecipeNotFoundException("Recipe not found with ID: " + recipeId);
         }
     }
 }

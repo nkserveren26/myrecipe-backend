@@ -3,13 +3,11 @@ package com.myrecipes.backend.service;
 import com.myrecipes.backend.dao.*;
 import com.myrecipes.backend.dto.*;
 import com.myrecipes.backend.entity.*;
-import com.myrecipes.backend.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -111,6 +109,7 @@ public class RecipeServiceImpl implements RecipeService{
         try {
             // 指定されたidのレシピを取得
             Recipe recipe = recipeDAO.findById(id);
+            System.out.println(recipe);
 
             // RecipeIngredientをDTOに変換
             List<RecipeIngredientDTO> ingredients = recipe.getIngredients().stream()
