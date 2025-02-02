@@ -110,7 +110,6 @@ public class RecipeServiceImpl implements RecipeService{
         try {
             // 指定されたidのレシピを取得
             Recipe recipe = recipeDAO.findById(id);
-            System.out.println(recipe);
 
             // RecipeIngredientをDTOに変換
             List<RecipeIngredientDTO> ingredients = recipe.getIngredients().stream()

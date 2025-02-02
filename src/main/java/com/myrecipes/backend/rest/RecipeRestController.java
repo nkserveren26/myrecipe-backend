@@ -46,7 +46,7 @@ public class RecipeRestController {
             RecipeDetailsResponse response =  recipeService.getRecipeDetails(id);
             return ResponseEntity.ok(response);
         } catch (RecipeNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404 Not Found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // 404 Not Found
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500エラーを返却
         }
