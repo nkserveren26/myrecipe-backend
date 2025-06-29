@@ -169,8 +169,10 @@ public class RecipeServiceImpl implements RecipeService{
             recipe.setCreatedAt(jstNow);
 
             // categoryフィールドにCategoryインスタンスをセット
+            System.out.println("get category");
             Category category = findCategoryByName(addRecipeRequest.getCategory());
             recipe.setCategory(category);
+            System.out.println("complete set category");
 
             // サムネイル画像が指定されている場合にのみ画像処理を実行
             if (thumbnail != null && !thumbnail.isEmpty()) {
@@ -184,12 +186,16 @@ public class RecipeServiceImpl implements RecipeService{
                 recipe.setImage(presignedUrl);
             }
 
+            System.out.println("completed setting image");
+
             // レシピにセットされた各材料のrecipeフィールドに対象レシピを設定
             if (recipe.getIngredients() != null) {
                 for (RecipeIngredient ingredient : recipe.getIngredients()) {
                     ingredient.setRecipe(recipe);
                 }
             }
+
+            System.out.println("completed setting ingredients");
 
             // レシピにセットされた各ステップのrecipeフィールドに対象レシピを設定
             if (recipe.getSteps() != null) {
@@ -198,10 +204,14 @@ public class RecipeServiceImpl implements RecipeService{
                 }
             }
 
+            System.out.println("completed setting steps");
+
             // レシピにセットされた、レシピのコツのrecipeフィールドに対象レシピを設定
             if (recipe.getRecipePoint() != null) {
                 recipe.getRecipePoint().setRecipe(recipe);
             }
+
+            System.out.println("completed setting point");
 
             recipeDAO.save(recipe);
         } catch (Exception e) {
