@@ -1,0 +1,22 @@
+{
+  "name": "Java Development with Amazon Corretto 21",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".",
+    "args": {
+
+    }
+  },
+  "runArgs": [
+    "-v", "C:\\Users\\username\\dirname:/usr/src/app"
+  ],
+  "settings": {
+
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": [
+
+  ],
+  "postCreateCommand": "./mvn clean install",
+  "remoteUser": "root"
+}
