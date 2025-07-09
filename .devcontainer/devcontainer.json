@@ -8,7 +8,7 @@
     }
   },
   "runArgs": [
-    "-v", "C:\\Users\\username\\dirname:/usr/src/app"
+    "-v", "C:\\data\\myrecipe\\App\\backend:/usr/src/app"
   ],
   "settings": {
 
