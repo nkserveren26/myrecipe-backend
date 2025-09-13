@@ -43,3 +43,19 @@ jobs:
           tags: |
             nkdeveloper26/myrecipe-backend:${{ env.VERSION }}
             nkdeveloper26/myrecipe-backend:latest
+
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: recipe_k8s_yaml
+
+      - name: Checkout Manifest repo
+        uses: actions/checkout@v4
+        with:
+          repository: nkserveren26/recipe_k8s_yaml
+          path: manifest
+          token: ${{ steps.app-token.outputs.token }}
