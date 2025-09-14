@@ -59,3 +59,7 @@ jobs:
           repository: nkserveren26/recipe_k8s_yaml
           path: manifest
           token: ${{ steps.app-token.outputs.token }}
+
+      - name: Update Deployment manifest
+        run: |
+          sed -i "s#image: nkdeveloper26/myrecipe-backend:.*#image: nkdeveloper26/myrecipe-backend:${VERSION}#g" manifest/backend/Deployment/backend-deployment.yaml
